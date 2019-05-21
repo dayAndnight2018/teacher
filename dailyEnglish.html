@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DateLY</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css"/>
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>		
+	</head>
+	<body>
+		
+		<nav class="navbar is-link" role="navigation" aria-label="main navigation">
+			<div class="navbar-brand">
+				<a class="navbar-item" href="#">
+					<h1 class="title has-text-white">
+					DateLY
+					</h1>
+				</a>
+		 
+				<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+				</a>
+			</div>
+	
+			<div id="navbarBasicExample" class="navbar-menu ">
+				<div class="navbar-start">
+					<a class="navbar-item ">
+						每日新闻
+					</a>
+		 
+					<a class="navbar-item">
+						教师资格
+					</a>
+					
+					<a class="navbar-item" herf="index.html" target="_self">
+						教师招聘
+					</a>
+					
+					<a class="navbar-item">
+						娱乐资讯
+					</a>
+					
+					<a class="navbar-item">
+						生活圈
+					</a>
+					
+					<a class="navbar-item">
+						相亲交友
+					</a>
+          
+				    <a class="navbar-item is-active" herf="dailyEnglish.html" target="_self">
+						每日一句
+				    </a>
+					
+				</div>
+			</div>
+		</nav>
+		
+		<section class="hero is-fullwidth is-link is-fullheight">
+			<div class="container hero-body">
+				<div class="columns is-centered">
+					<div class="column">
+						<div class="has-text-centered">
+								<h1 class="title">The difference between who you are and who you want to be is what you do.</h1>
+				　　				<h2 class="subtitle">你是什么样的人和你想成为什么样的之间的差距就是，你做了什么。<h2>
+						</div>
+					</div>
+				</div>
+			</div>
+					
+		</section>
+				
+		<script>
+			$(document).ready(
+				$("ul li").click(function(){
+					$(this).siblings().removeClass("is-active");
+					$(this).addClass("is-active");
+				})
+			);
+		</script>
+	</body>
+</html>
