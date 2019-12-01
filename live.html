@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css"/>
+	<script src="https://unpkg.com/vue@2.6.6/dist/vue.js"></script>
+	<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+	<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>	
+	
+	<head>
+		<title>免费直播视频</title>
+		<style type="text/css">
+			button{
+				padding: 3px 5px;
+				background: grey;
+				color: white;
+				font-weight: bold;
+				margin: 10px 5px;
+			}
+
+			.is-live{
+				background: dodgerblue !important;
+				color: white !important;
+			}
+		</style>
+	</head>
+<body>
+	<div style="width: 100%;margin: 50px auto;"><h3 style="margin: 0 auto;text-align: center;font-size:25px;">在线免费直播视频</h3></div>
+	<div style="width: 80%;margin: 50px auto;display: flex;flex-direction: row;">
+		<div style="flex:7">
+            <iframe id="player" src="https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2xpdmUvY2N0djFfMi9pbmRleC5tM3U4" style="width: 100%;height: 700px;" frameborder="0"border="0">            	
+            </iframe>         
+		</div>
+		<div style="flex:2;height: 700px;overflow-y: scroll;">
+			<nav class="panel">
+				<div style="position: sticky;top:0px;background: silver;">
+					<p class="panel-heading" >
+						频道列表
+					</p>
+					<p class="panel-tabs">
+						<a class="is-active" href="javascript:change(1);" id="cctvBtn">央视</a>
+						<a href="javascript:change(2);" id="provinceBtn">卫视</a>
+						<a href="javascript:change(3);" id="movieBtn">电影</a>
+						<a href="javascript:change(4);" id="operaBtn">剧集</a>
+					</p>
+				</div>
+
+				<div id="CCTVChannel">
+					<a class="panel-block is-active" href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2xpdmUvY2N0djFfMi9pbmRleC5tM3U4");'>
+						CCTV-1综合
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2xpdmUvY2N0djJfMi9pbmRleC5tM3U4");' >
+						CCTV-2财经
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZic2g1Y2Eudi5saXZlLmJhaXNoYW5jZG54LmNuL2xpdmUvY2N0djNfMi9pbmRleC5tM3U4");'>
+						CCTV-3综艺
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZic2g1Y2Eudi5saXZlLmJhaXNoYW5jZG54LmNuL2xpdmUvY2N0djRfMi9pbmRleC5tM3U4");'>
+						CCTV-4中文国际
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2xpdmUvY2N0djVfMi9pbmRleC5tM3U4");'>
+						CCTV-5体育
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZjbmNoNWMudi53c2NkbnMuY29tL2xpdmUvY2N0djZfMi9pbmRleC5tM3U4");'>
+						CCTV-6电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZic2g1Y2Eudi5saXZlLmJhaXNoYW5jZG54LmNuL2xpdmUvY2N0djdfMi9pbmRleC5tM3U4");'>
+						CCTV-7军事·农业
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2xpdmUvY2N0djhfMi9pbmRleC5tM3U4");'>
+						CCTV-8电视剧
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZic2g1Y2Eudi5saXZlLmJhaXNoYW5jZG54LmNuL2xpdmUvY2N0dmppbHVfMi9pbmRleC5tM3U4");'>
+						CCTV-9记录
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2xpdmUvY2N0djEwXzIvaW5kZXgubTN1OA==");'>
+						CCTV-10科教
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZic2g1Y2Eudi5saXZlLmJhaXNoYW5jZG54LmNuL2xpdmUvY2N0djExXzIvaW5kZXgubTN1OA==");'>
+						CCTV-11戏曲
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2xpdmUvY2N0djEyXzIvaW5kZXgubTN1OA==");'>
+						CCTV-12社会与法
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2xpdmUvY2N0djEzXzIvaW5kZXgubTN1OA==");'>
+						CCTV-13新闻
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2xpdmUvY2N0dmNoaWxkXzIvaW5kZXgubTN1OA==");'>
+						CCTV-14少儿
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2xpdmUvY2N0djE1XzIvaW5kZXgubTN1OA==");'>
+						CCTV-15音乐
+					</a>
+				</div>
+
+				<div style="display: none;" id="ProvinceChannel">				
+					<a class="panel-block is-active"  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2NzdHYveGlhbmdnYW5nd2Vpc2hpXzIvaW5kZXgubTN1OA==");'>
+						香港卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovLzExNy4xNjkuMTIwLjIxNzo4MDgwL2xpdmUvZmhjaGluZXNlLzEubTN1OA==");'>
+						凤凰卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZ0eHloNWNhLmxpdmVwbGF5Lm15cWNsb3VkLmNvbS93c3R2L3NpY2h1YW5fMi9pbmRleC5tM3U4");'>
+						四川卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZ0eHloNWNhLmxpdmVwbGF5Lm15cWNsb3VkLmNvbS93c3R2L3FpbmdoYWlfMi9pbmRleC5tM3U4");'>
+						青海卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZ0eHloNWNhLmxpdmVwbGF5Lm15cWNsb3VkLmNvbS93c3R2L2ppbGluXzIvaW5kZXgubTN1OA==");'>
+						吉林卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvZ3Vhbmd4aV8yL2luZGV4Lm0zdTg=");'>
+						广西卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZ0eHloNWNhLmxpdmVwbGF5Lm15cWNsb3VkLmNvbS9jc3R2L2NldHYxXzIvaW5kZXgubTN1OA==");'>
+						CETV-1
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZ0eHloNWNhLmxpdmVwbGF5Lm15cWNsb3VkLmNvbS93c3R2L25pbmd4aWFfMi9pbmRleC5tM3U4");'>
+						宁夏卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovLzExNy4xNTYuMjguNTgvUExUVi84ODg4ODg4OC8yMjQvMzIyMTIyNTYxMy9pbmRleC5tM3U4");'>
+						甘肃卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvc2hhbjN4aV8yL2luZGV4Lm0zdTg=");'>
+						陕西卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZic2g1Y2Eudi5saXZlLmJhaXNoYW5jZG54LmNuL3dzdHYvc2hhbjF4aV8yL2luZGV4Lm0zdTg=");'>
+						山西卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZ0eHloNWNhLmxpdmVwbGF5Lm15cWNsb3VkLmNvbS93c3R2L25laW1lbmdndV8yL2luZGV4Lm0zdTg=");'>
+						内蒙古卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovLzExMS40OC4zNC4yMjYvaHVhd2VpY2RuLmhiLmNoaW5hbW9iaWxlLmNvbS9QTFRWLzg4ODg4ODg4LzIyNC8zMjIxMjI1OTQ3LzEubTN1OA==");'>
+						兵团卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL25jbGl2ZS5ncnRuLmNuL3R2czIvc2QvbGl2ZS5tM3U4P191cHQ9NGZiZDFmODgxNTQ2MjMyODI3");'>
+						南方卫视
+					</a>
+
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2xpdmVoeXcyLnNvYmV5Y2FjaGUuY29tL3hqdHZzL3piMDEubTN1OA==");'>
+						新疆卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZ0eHloNWNhLmxpdmVwbGF5Lm15cWNsb3VkLmNvbS93c3R2L3hpemFuZ18yL2luZGV4Lm0zdTg=");'>
+						西藏卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYveXVubmFuXzIvaW5kZXgubTN1OA==");'>
+						云南卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZ0eHloNWNhLmxpdmVwbGF5Lm15cWNsb3VkLmNvbS93c3R2L3RyYXZlbF8yL2luZGV4Lm0zdTg=");'>
+						海南卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZ0eHloNWNhLmxpdmVwbGF5Lm15cWNsb3VkLmNvbS93c3R2L2ppYW5neGlfMi9pbmRleC5tM3U4");'>
+						江西卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZic2g1Y2Eudi5saXZlLmJhaXNoYW5jZG54LmNuL3dzdHYvaGVuYW5fMi9pbmRleC5tM3U4");'>
+						河南卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvZ3VpemhvdV8yL2luZGV4Lm0zdTg=");'>
+						贵州卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvZG9uZ25hbl8yL2luZGV4Lm0zdTg=");'>
+						东南卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovLzIxOS4xNTMuMjUyLjUwL1BMVFYvODg4ODg4ODgvMjI0LzMyMjEyMjU1NDkvY2h1bmtsaXN0Lm0zdTg=");'>
+						重庆卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvbGlhb25pbmdfMi9pbmRleC5tM3U4");'>
+						辽宁卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvYW5odWlfMi9pbmRleC5tM3U4");'>
+						安徽卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL3dlYmxpdmUuaGVidHYuY29tL2xpdmUvaGJ3c19icS9pbmRleC5tM3U4");'>
+						河北卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZ0eHloNWNhLmxpdmVwbGF5Lm15cWNsb3VkLmNvbS93c3R2L2hlaWxvbmdqaWFuZ18yL2luZGV4Lm0zdTg=");'>
+						黑龙江卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvdGlhbmppbl8yL2luZGV4Lm0zdTg=");'>
+						天津卫视
+					</a>
+
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2J5NC5udHkudHYxODkuY24vdG0tYnR2MWhkLTgwMGsubTN1OA==");'>
+						东方卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvYnR2MV8yL2luZGV4Lm0zdTg=");'>
+						北京卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvaHViZWlfMi9pbmRleC5tM3U4");'>
+						湖北卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvc2hhbmRvbmdfMi9pbmRleC5tM3U4");'>
+						山东卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvc2hlbnpoZW5fMi9pbmRleC5tM3U4");'>
+						深圳卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL3dzdHYvZ3Vhbmdkb25nXzIvaW5kZXgubTN1OA==");'>
+						广东卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovL2NjdHZhbGloNWNhLnYubXlhbGljZG4uY29tL2NzdHYveGlhbmdnYW5nd2Vpc2hpXzIvaW5kZXgubTN1OA==");'>
+						浙江卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=aHR0cDovLzIyMS42Ljg1LjE1MDo5MDAwL2xpdmUvanN3c184MDAvanN3c184MDAubTN1OA==");'>
+						江苏卫视
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.qianqi.net/ckplayer/?url=Lmh0dHA6Ly9ieTQubnR5LnR2MTg5LmNuL3RtLWJ0djFoZC04MDBrLm0zdTg=");'>
+						湖南卫视
+					</a>
+				</div>
+
+				<div style="display: none;" id="MovieChannel">
+					<a class="panel-block is-active"  href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL3R4Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8zMDc2NTY3OS0yNTU0NDE0NjgwLTEwOTcxMTI3NTExMDIyMzA1MjgwLTMwNDg5OTE2MzQtMTAwNTctQS0wLTEubTN1OA==");'>
+						真实改编
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8zMDc2NTY3OS0yNTA0NzQyMjc4LTEwNzU3Nzg2MTY4OTE4NTQwMjg4LTMwNDkwMDMxMjgtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						漫威电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS85NDUyNTIyNC0yNDYwNjg1NzIyLTEwNTY4NTY0NzAxNzI0MTQ3NzEyLTI3ODkyNTM4MzgtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						成龙电影
+					</a>
+					<a class="panel-block "  href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8zMDc2NTY3OS0yNjg5Njc1ODI4LTExNTUyMDY5NzE4MTAxNzIxMDg4LTMwNDg5OTE2MjYtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						徐峥电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8zMDc2NTY3OS0yNTU0NDE0NjgwLTEwOTcxMTI3NTExMDIyMzA1MjgwLTMwNDg5OTE2MzQtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						黄渤电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS85NDUyNTIyNC0yNDY5NTE3NTQ4LTEwNjA2NDk3MTA1NTU4MTEwMjA4LTI4NDc2OTkxNzYtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						邓超电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8yOTE2OTAyNS0yNjg2MjIwNTk4LTExNTM3MjI5NjE4MjUxNTYzMDA4LTI4NDc2ODc1NTYtMTAwNTctQS0xNTI0MDQzMDQ4LTFfMTIwMC5tM3U4");'>
+						警匪电影
+					</a>
+					<a class="panel-block " href='javascript:play("http://aldirect.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1.m3u8");'>
+						周星驰电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS85NDUyNTIyNC0yNDY3MzQxODcyLTEwNTk3MTUyNjQ4MjkxNDE4MTEyLTI3ODkyNzQ1NTAtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						刘德华电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS85NDUyNTIyNC0yNDYwNjg1Nzc0LTEwNTY4NTY0OTI1MDYyNDQ3MTA0LTI3ODkyNTM4NDAtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						周润发电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2pzLmhscy5odXlhLmNvbS9odXlhbGl2ZS85NDUyNTIyNC0yNDYwNjg2MDkzLTEwNTY4NTY2Mjk1MTU3MDE0NTI4LTI3ODkyNTM4NDgtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						李连杰电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8yOTE2OTAyNS0yNjg2MjE5OTM4LTExNTM3MjI2NzgzNTczMTQ3NjQ4LTI4NDc2OTkwOTYtMTAwNTctQS0xNTI0MDI0NzU5LTFfMTIwMC5tM3U4");'>
+						甄子丹电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8yOTEwNjA5Ny0yNjg5NDUzNzI0LTExNTUxMTE1Nzg4Njg1NDEwMzA0LTI4NDc2ODc1MDYtMTAwNTctQS0xNTI1NDIyOTAxLTFfMTIwMC5tM3U4");'>
+						香港经典电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8yODQ2NjY5OC0yNjg5NjU2ODY0LTExNTUxOTg4MjY4MzQxOTE5NzQ0LTI4NDc2OTkxOTQtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						海外科幻电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8yOTE2OTAyNS0yNjg2MjE5OTYyLTExNTM3MjI2ODg2NjUyMzYyNzUyLTI3MTAwODAyMjYtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						港台电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL3R4Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8zMDc2NTY3OS0yNTU0NDE0NzA1LTEwOTcxMTI3NjE4Mzk2NDg3NjgwLTMwNDg5OTE2MzYtMTAwNTctQS0wLTEubTN1OA==");'>
+						斯坦森电影
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL3R4Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8yODQ2NjY5OC0yNjg5NjYxNTMwLTExNTUyMDA4MzA4NjU5MzIyODgwLTMwNDkwMDMxMDItMTAwNTctQS0wLTEubTN1OA==");'>
+						复仇犯罪
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL3R4Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8zMDc2NTY3OS0yNDc4MjY4NzY0LTEwNjQ0MDgzMjkyMDc4MzQyMTQ0LTI4NDc2OTkxMDYtMTAwNTctQS0wLTEubTN1OA==");'>
+						怪物科幻电影
+					</a>
+				</div>
+
+				<div style="display: none;" id="OperaChannel"">
+					<a class="panel-block " onClick='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8zMDc2NTY3OS0yNTIzNDE3MzUzLTEwODM3OTk1MDA1MjkzODg3NDg4LTI4NDc2OTkxMTgtMTAwNTctQS0wLTEubTN1OA==");' >
+						新三国
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL3R4Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8zMDc2NTY3OS0yNDk3Mjk2MzMyLTEwNzI1ODA2MDc0MzYwNzU4MjcyLTI3ODkyNTM4MzQtMTAwNTctQS0wLTEubTN1OA==");'>
+						我是特种兵
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS85NDUyNTIyNC0yNDY4NTcxMzQ4LTEwNjAyNDMzMjA3NTAyNjM1MDA4LTI3ODkyNTM4NjQtMTAwNTctQS0wLTFfMTIwMC5tM3U4");' >
+						特齿铜牙纪晓岚
+					</a>										
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8yOTE2OTAyNS0yNjg2MjIxMjUyLTExNTM3MjMyNDI3MTYwMTc0NTkyLTI4NDc2ODc1MDgtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						家有儿女
+					</a>
+					<a class="panel-block " href='javascript:play("https://api.bingdou.net/ckplayer/?url=aHR0cDovL2FsZGlyZWN0Lmhscy5odXlhLmNvbS9odXlhbGl2ZS8zMDc2NTY3OS0yNTIzNDE3NDkzLTEwODM3OTk1NjA2NTg5MzA4OTI4LTI3NzcwNzE1OTQtMTAwNTctQS0wLTFfMTIwMC5tM3U4");'>
+						爱情公寓
+					</a>					
+				</div>
+				
+			</nav>
+		</div>
+		
+	</div>
+
+	<script type="text/javascript">
+		function change(num){
+						
+			switch(num){
+				case 1:
+					$("#CCTVChannel").show();
+					$("#ProvinceChannel").hide();
+					$("#MovieChannel").hide();
+					$("#OperaChannel").hide();
+					$("#cctvBtn").addClass("is-active");
+					$("#provinceBtn").removeClass("is-active");
+					$("#movieBtn").removeClass("is-active");
+					$("#operaBtn").removeClass("is-active");
+					break;
+				case 2:
+					$("#CCTVChannel").hide();
+					$("#ProvinceChannel").show();
+					$("#MovieChannel").hide();
+					$("#OperaChannel").hide();
+					$("#cctvBtn").removeClass("is-active");
+					$("#provinceBtn").addClass("is-active");
+					$("#movieBtn").removeClass("is-active");
+					$("#operaBtn").removeClass("is-active");
+					break;
+				case 3:
+					$("#CCTVChannel").hide();
+					$("#ProvinceChannel").hide();
+					$("#MovieChannel").show();
+					$("#OperaChannel").hide();
+					$("#cctvBtn").removeClass("is-active");
+					$("#provinceBtn").removeClass("is-active");
+					$("#movieBtn").addClass("is-active");
+					$("#operaBtn").removeClass("is-active");
+					break;
+				case 4:
+					$("#CCTVChannel").hide();
+					$("#ProvinceChannel").hide();
+					$("#MovieChannel").hide();
+					$("#OperaChannel").show();
+					$("#cctvBtn").removeClass("is-active");
+					$("#provinceBtn").removeClass("is-active");
+					$("#movieBtn").removeClass("is-active");
+					$("#operaBtn").addClass("is-active");
+					break;
+
+			}
+		}
+
+		function play(url){	
+				
+			$("#player").attr("src",url);
+
+		}
+
+		$(document).ready(function(){
+			$("#OperaChannel a").click(function(){
+				$(this).addClass("is-live");
+				$(this).siblings().removeClass("is-live");	
+			});
+			$("#MovieChannel a").click(function(){
+				$(this).addClass("is-live");
+				$(this).siblings().removeClass("is-live");	
+			});
+			$("#CCTVChannel a").click(function(){
+				$(this).addClass("is-live");
+				$(this).siblings().removeClass("is-live");	
+			});
+			$("#ProvinceChannel a").click(function(){
+				$(this).addClass("is-live");
+				$(this).siblings().removeClass("is-live");	
+			});
+		});
+
+                    
+	</script>
+</body>
+</html>
