@@ -66,13 +66,13 @@
 			</div>
 		</nav>
 		
-		<section class="hero is-fullwidth is-link is-fullheight">
+		<section class="hero is-fullwidth is-fullheight" style="background: url('https://api.xygeng.cn/Bing/');">
 			<div class="container hero-body">
 				<div class="columns is-centered">
 					<div class="column">
 						<div class="has-text-centered">
-								<h1 class="title">The difference between who you are and who you want to be is what you do.</h1>
-				　　				<h2 class="subtitle">你是什么样的人和你想成为什么样的之间的差距就是，你做了什么。<h2>
+								<h1 class="title has-text-white" id="englishText"></h1>
+				　　				<h2 class="subtitle has-text-white" id="transText"><h2>
 						</div>
 					</div>
 				</div>
@@ -81,12 +81,33 @@
 		</section>
 				
 		<script>
+
+			function getDate(){
+				var date = new Date();
+				return date.getFullYear()+'-'+('0'+(date.getMonth()+1)).slice(-2)+'-'+date.getDate();
+			}
+
+			function searchCallback(rdata) {
+			    $("#englishText").text(rdata.content);
+			    $("#transText").text(rdata.note);
+			};
+
 			$(document).ready(
+				function(){
 				$("ul li").click(function(){
 					$(this).siblings().removeClass("is-active");
 					$(this).addClass("is-active");
-				})
-			);
+				});
+
+				
+				$.ajax({
+				    url: 'http://sentence.iciba.com/index.php?c=dailysentence&m=getdetail&title='+ getDate(),
+				    type: 'get',
+				    dataType: 'jsonp',  // 请求方式为jsonp
+				    jsonpCallback: "searchCallback"
+				});
+
+			});
 		</script>
 	</body>
 </html>
