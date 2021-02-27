@@ -23,7 +23,7 @@
 					</h1>
 				</a>
 		 
-				<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+				<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" id="bar-btn">
 					<span aria-hidden="true"></span>
 					<span aria-hidden="true"></span>
 					<span aria-hidden="true"></span>
@@ -257,12 +257,16 @@
 
 		
 		<script>
-			$(document).ready(
-				$("ul li").click(function(){
+			$(document).ready(function(){
+				$("ul li").click(function() {
 					$(this).siblings().removeClass("is-active");
 					$(this).addClass("is-active");
-				})
-			);
+				});
+				
+				$("#bar-btn").click(function(){
+					$("#navbarBasicExample").toggleClass("is-active");
+				});
+			});
 		</script>
 	</body>
 </html>
