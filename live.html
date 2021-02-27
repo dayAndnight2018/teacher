@@ -34,7 +34,7 @@
 					</h1>
 				</a>
 		 
-				<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+				<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" id="bar-btn">
 					<span aria-hidden="true"></span>
 					<span aria-hidden="true"></span>
 					<span aria-hidden="true"></span>
@@ -416,8 +416,13 @@
 				$(this).addClass("is-live");
 				$(this).siblings().removeClass("is-live");	
 			});
+									
+			$("#bar-btn").click(function(){
+					$("#navbarBasicExample").toggleClass("is-active");
+				});
 		});
-
+		
+		
                     
 	</script>
 </body>
