@@ -277,7 +277,7 @@
 
 
 		<script>
-			$(document).ready(
+			$(document).ready(function(){
 				$("ul li").click(function() {
 					$(this).siblings().removeClass("is-active");
 					$(this).addClass("is-active");
@@ -286,7 +286,7 @@
 				$("#bar-btn").click(function(){
 					$("#navbarBasicExample").toggleClass("is-active");
 				});
-			);
+			});
 		</script>
 	</body>
 </html>
