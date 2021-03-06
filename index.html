@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>DateLY</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="bulma.css" />
 		<script src="jquery.js"></script>
 
@@ -10,11 +10,16 @@
 			table {
 				text-align: center;
 			}
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
 		</style>
 	</head>
 	<body>
 
-		<nav class="navbar is-link" role="navigation" aria-label="main navigation">
+    <div style="width: 100%;">
+		<nav class="navbar is-link" role="navigation" aria-label="main navigation" style="position: sticky;top: 0px;">
 			<div class="navbar-brand">
 				<a class="navbar-item" href="#">
 					<h1 class="title has-text-white">
@@ -67,22 +72,24 @@
 			<div class="columns is-centered">
 				<div class="column">
 					<h3 class="is-size-3 has-text-centered has-text-danger" style="margin: 50px;">临沂市2021年教师招聘简章</h3>
-					<table class="table is-bordered is-fullwidth is-hoverable">
+					<div>
+					<table class="table is-bordered is-hoverable" style="word-break: break-word;">
 
-						<thead class="has-text-weight-bold">
+						<thead class="has-text-weight-bold" style="width: 100%;">
 							<td>类型</td>
 							<td>县区</td>
 							<td>链接</td>
 							<td>面试通知</td>
 						</thead>
-						<tr>
+						<tbody style="overflow-y: scroll; margin: 0px auto; width: 100%;">
+						<tr style="width: 100%;">
 							<td>市直</td>
 							<td>市直</td>
 							<td>暂无</td>
 							<td>暂无</td>
 						</tr>
 
-						<tr>
+						<tr style="width: 100%;">
 							<td rowspan="3">三区</td>
 							<td>
 								兰山区
@@ -96,16 +103,16 @@
 								<a href="http://www.lyls.gov.cn/info/2003/98368.htm" target="_blank">http://www.lyls.gov.cn/info/2003/98368.htm</a>
 							</td>
 						</tr>
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								罗庄区
 							</td>
 							<td>
 								<a href="http://www.luozhuang.gov.cn/info/1018/20305.htm" target="_blank">http://www.luozhuang.gov.cn/info/1018/20305.htm</a>
 							</td>
-							<td>暂无</td>
+							<td><a href="http://www.luozhuang.gov.cn/info/1018/39217.htm" target="_blank">临沂市罗庄区教育系统公开引进2021年应届高校毕业生面试资格审查及面试公告</a>&nbsp;&nbsp;<span class="has-text-primary">new!</span></td>
 						</tr>
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								河东区
 							</td>
@@ -118,7 +125,7 @@
 						</tr>
 
 
-						<tr>
+						<tr style="width: 100%;">
 							<td rowspan="9">九县</td>
 							<td>
 								郯城县
@@ -131,7 +138,7 @@
 								<a href="http://www.tancheng.gov.cn/info/1032/120256.htm" target="_blank">http://www.tancheng.gov.cn/info/1032/120256.htm</a>
 							</td>
 						</tr>
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								兰陵县
 							</td>
@@ -142,7 +149,7 @@
 								<a href="http://www.lanling.gov.cn/info/1196/22817.htm" target="_blank">http://www.lanling.gov.cn/info/1196/22817.htm</a>
 							</td>
 						</tr>
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								沂水县
 							</td>
@@ -153,7 +160,7 @@
 								<a href="http://60.208.23.55/New_lyyishuijy/index.html#/index" target="_blank">成绩查询入口</a>
 							</td>
 						</tr>
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								沂南县
 							</td>
@@ -162,7 +169,7 @@
 							</td>
 							<td>暂无</td>
 						</tr>
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								蒙阴县
 							</td>
@@ -171,7 +178,7 @@
 							</td>
 							<td>暂无</td>
 						</tr>
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								费县
 							</td>
@@ -183,16 +190,16 @@
 								<a href="http://www.feixian.gov.cn/info/2398/66690.htm" target="_blank">http://www.feixian.gov.cn/info/2398/66690.htm</a>
 							</td>
 						</tr>
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								平邑县
 							</td>
 							<td>
-								<a href="http://www.pingyi.gov.cn/info/1028/81183.htm" target="_blank">http://www.pingyi.gov.cn/info/1028/81183.htm</a>
+								<a href="http://www.pingyi.gov.cn/info/1028/100946.htm" target="_blank">2021年山东省平邑县引进高层次教学人才和师范类高学历毕业生公告</a>&nbsp;&nbsp;<span class="has-text-primary">new!</span>
 							</td>
 							<td>暂无</td>
 						</tr>
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								临沭县
 							</td>
@@ -203,7 +210,7 @@
 								<a href="http://www.linshu.gov.cn/info/1608/141528.htm" target="_blank">http://www.linshu.gov.cn/info/1608/141528.htm</a>
 							</td>
 						</tr>
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								莒南县
 							</td>
@@ -213,7 +220,7 @@
 							<td>暂无</td>
 						</tr>
 
-						<tr>
+						<tr style="width: 100%;">
 							<td rowspan="4">其他</td>
 							<td>
 								蒙山旅游度假区
@@ -224,7 +231,7 @@
 							<td>暂无</td>
 						</tr>
 
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								临沂经济技术开发区教育系统公开招聘优秀高中骨干教师
 							</td>
@@ -236,7 +243,7 @@
 							</td>
 						</tr>
 
-						<tr>
+						<tr style="width: 100%;">
 							<td>
 								临沂经济技术开发区招聘聘用制教师
 							</td>
@@ -259,14 +266,15 @@
 								暂无
 							</td>
 						</tr>
-
+				    </tbody>
 					</table>
 				</div>
-			</div>
-
-		</section>
-
-
+				</div>
+		</div>
+	</div>
+</div>
+		
+</section>
 
 		<script>
 			$(document).ready(function(){
