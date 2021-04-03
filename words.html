@@ -15,7 +15,7 @@
 				background: #111827;
 			}
 
-			#main{
+			#app,#main{
 				display: flex;
 				flex-direction: row;
 				justify-content: space-around;
@@ -97,7 +97,7 @@
 				font-size: 20px;
 				position: fixed;
 				right: 20px;
-				top: 20px;
+				top: 100px;
 				border: 1px solid silver;
 				padding: 5px;
 				border-radius: 8px;
@@ -106,7 +106,6 @@
 	</head>
 	<body>
 
-    <div style="width: 100%;">
 		<nav class="navbar is-link" role="navigation" aria-label="main navigation" style="position: sticky;top: 0px;">
 			<div class="navbar-brand">
 				<a class="navbar-item" href="#">
@@ -161,8 +160,6 @@
 			</div>
 		</nav>
 
-		<section class="container">
-			<div class="columns is-centered">
                 <div id="app">
 
                     <button v-on:click="toggle()" class="option">
@@ -193,12 +190,7 @@
                     <audio autoplay="autoplay" controls="controls" id="player" style="display: none;">
                         <source id="source" ></source>
                     </audio>
-        
-                </div>
-            </div>
-		
-        </section>
-
+            	</div>
 		<script>
             var vue = new Vue({
 				el:"#app",
