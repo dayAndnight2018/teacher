@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DateLY</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="bulma.css" />
+		<script src="jquery.js"></script>
+
+		<style type="text/css">
+			html,body{
+				width: 100%;
+				height: 100%;
+				background: #111827;
+			}
+
+			#main{
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				align-items: center;
+				width: 100%;
+				height: 100%;
+			}
+
+			#letters{
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.letter_underlined{
+				border-bottom: 2px solid white; 
+				color:white;
+				font-size: 60px;
+				margin: 0px 5px;
+				min-width: 40px;
+				max-width: 40px;
+				min-height: 100px;
+				max-height: 100px;
+			}
+
+			.letter_success{
+				color: lightgreen;
+				font-size: 60px;
+				margin: 0px 5px;
+				min-width: 40px;
+				max-width: 40px;
+				min-height: 100px;
+				max-height: 100px;
+			}
+
+			.letter_fail{
+				color: red;
+				font-size: 60px;
+				margin: 0px 5px;
+				min-width: 40px;
+				max-width: 40px;
+				min-height: 100px;
+				max-height: 100px;
+			}
+
+			.letter{
+				color:white;
+				font-size: 60px;
+				margin: 0px 5px;
+				min-width: 40px;
+				max-width: 40px;
+				min-height: 100px;
+				max-height: 100px;
+			}
+
+			#present{
+				width: 80%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+
+			#trans{
+				margin-top:50px;
+				font-size: 20px;
+				color: silver;
+			}
+
+			button{
+				background: transparent;
+				font-size: 40px;
+				color: white;
+				border: none;
+			}
+
+			button.option{
+				font-size: 20px;
+				position: fixed;
+				right: 20px;
+				top: 20px;
+				border: 1px solid silver;
+				padding: 5px;
+				border-radius: 8px;
+			}
+		</style>
+	</head>
+	<body>
+
+    <div style="width: 100%;">
+		<nav class="navbar is-link" role="navigation" aria-label="main navigation" style="position: sticky;top: 0px;">
+			<div class="navbar-brand">
+				<a class="navbar-item" href="#">
+					<h1 class="title has-text-white">
+						DateLY
+					</h1>
+				</a>
+
+				<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" id="bar-btn">
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+				</a>
+			</div>
+
+			<div id="navbarBasicExample" class="navbar-menu ">
+				<div class="navbar-start">
+					<a class="navbar-item ">
+						每日新闻
+					</a>
+
+					<a class="navbar-item">
+						教师资格
+					</a>
+
+					<a class="navbar-item is-active" herf="index.html" target="_self" onclick="location='index.html'">
+						教师招聘
+					</a>
+
+					<a class="navbar-item" href="book.html" target="_self" onclick="location='book.html'">
+						人教版电子教材
+					</a>
+
+					<a class="navbar-item" href="interview.html" target="_self" onclick="location='interview.html'">
+						面试技巧
+					</a>
+
+					<a class="navbar-item" href="resource.html" target="_self" onclick="location='resource.html'">
+						招聘考试资料
+					</a>
+
+					<a class="navbar-item" herf="https://github.com/dayAndnight2018/teacher/edit/master/dailyEnglish.html" target="_self"
+					 onclick="location='dailyEnglish.html'">
+						每日一句
+                    </a>
+                    
+                    <a class="navbar-item" herf="https://github.com/dayAndnight2018/teacher/edit/master/words.html" target="_self"
+                    onclick="location='words.html'">
+                        爱记单词
+                    </a> 
+				</div>
+			</div>
+		</nav>
+
+		<section class="container">
+			<div class="columns is-centered">
+                <div id="app">
+
+                    <button v-on:click="toggle()" class="option">
+                        记忆
+                    </button>
+        
+                    <div id="main">
+                        <button v-on:click="lastWord()">
+                            &lt;
+                        </button>
+        
+                        <div id="present">
+                            <div id="letters">
+                                <span :class="[mode == 0?'letter':'letter_underlined']" v-for="item in items">
+                                    <label v-html="item"></label>
+                                </span> 
+                            </div>
+                            <div id="trans">
+                                {{trans}}
+                            </div>
+                        </div>
+        
+                        <button v-on:click="nextWord()">
+                            &gt;
+                        </button>
+                    </div>
+        
+                    <audio autoplay="autoplay" controls="controls" id="player" style="display: none;">
+                        <source id="source" ></source>
+                    </audio>
+        
+                </div>
+            </div>
+		
+        </section>
+
+		<script>
+            var vue = new Vue({
+				el:"#app",
+				data:{
+					keyIndex:0,
+					words:[{"name": "ruler", "trans": ["尺子"], "usphone": "'rulɚ", "ukphone": "'ruːlə"}, {"name": "pencil", "trans": ["铅笔"], "usphone": "'pɛnsl", "ukphone": "'pens(ə)l; -sɪl"}, {"name": "eraser", "trans": ["橡皮"], "usphone": "ɪ'resɚ", "ukphone": "ɪ'reɪzə"}, {"name": "crayon", "trans": ["蜡笔"], "usphone": "kreən", "ukphone": "ˈkreɪən"}, {"name": "bag", "trans": ["包"], "usphone": "bæɡ", "ukphone": "bæg"}, {"name": "pen", "trans": ["钢笔"], "usphone": "pɛn", "ukphone": "pen"}, {"name": "pencil box", "trans": ["铅笔盒"], "usphone": "'pɛnsl bɑks", "ukphone": ""}, {"name": "book", "trans": ["书"], "usphone": "bʊk", "ukphone": "bʊk"}, {"name": "no", "trans": ["不"], "usphone": "no", "ukphone": "nəʊ"}, {"name": "your", "trans": ["你（们）的"], "usphone": "jʊər; jʊr", "ukphone": "jɔ:(r)"}, {"name": "red", "trans": ["红色；红色的"], "usphone": "rɛd", "ukphone": "red"}, {"name": "green", "trans": ["绿色；绿色的"], "usphone": "ɡrin", "ukphone": "griːn"}, {"name": "yellow", "trans": ["黄色；黄色的"], "usphone": "ˈjɛlo", "ukphone": "'jeləʊ"}, {"name": "blue", "trans": ["蓝色；蓝色的"], "usphone": "blu", "ukphone": "bluː"}, {"name": "black", "trans": ["黑色；黑色的"], "usphone": "blæk", "ukphone": "blæk"}, {"name": "brown", "trans": ["棕色；棕色的"], "usphone": "braʊn", "ukphone": "braʊn"}, {"name": "white", "trans": ["白色；白色的"], "usphone": "hwaɪt", "ukphone": "waɪt"}, {"name": "orange", "trans": ["橙色；橙色的"], "usphone": "'ɔrɪndʒ", "ukphone": "'ɒrɪn(d)ʒ"}, {"name": "OK", "trans": ["好；行"], "usphone": "", "ukphone": ""}, {"name": "mum", "trans": ["妈妈"], "usphone": "mʌm", "ukphone": "mʌm"}, {"name": "face", "trans": ["脸"], "usphone": "fes", "ukphone": "feɪs"}, {"name": "ear", "trans": ["耳朵"], "usphone": "ɪr", "ukphone": "ɪə"}, {"name": "eye", "trans": ["眼睛"], "usphone": "aɪ", "ukphone": "aɪ"}, {"name": "nose", "trans": ["鼻子"], "usphone": "noz", "ukphone": "nəʊz"}, {"name": "mouth", "trans": ["嘴"], "usphone": "maʊθ", "ukphone": "maʊθ"}, {"name": "arm", "trans": ["胳膊"], "usphone": "ɑrm", "ukphone": "ɑːm"}, {"name": "hand", "trans": ["手"], "usphone": "hænd", "ukphone": "hænd"}, {"name": "head", "trans": ["头"], "usphone": "hɛd", "ukphone": "hed"}, {"name": "body", "trans": ["身体"], "usphone": "'bɑdi", "ukphone": "'bɒdɪ"}, {"name": "leg", "trans": ["腿"], "usphone": "lɛɡ", "ukphone": "leg"}, {"name": "foot", "trans": ["脚"], "usphone": "fʊt", "ukphone": "fʊt"}, {"name": "school", "trans": ["学校"], "usphone": "skul", "ukphone": "skuːl"}, {"name": "duck", "trans": ["鸭子"], "usphone": "dʌk", "ukphone": "dʌk"}, {"name": "pig", "trans": ["猪"], "usphone": "pɪɡ", "ukphone": "pɪg"}, {"name": "cat", "trans": ["猫"], "usphone": "kæt", "ukphone": "kæt"}, {"name": "bear", "trans": ["熊"], "usphone": "bɛr", "ukphone": "beə"}, {"name": "dog", "trans": ["狗"], "usphone": "dɔɡ", "ukphone": "dɒg"}, {"name": "elephant", "trans": ["大象"], "usphone": "ˈɛləfənt", "ukphone": "'elɪf(ə)nt"}, {"name": "monkey", "trans": ["猴子"], "usphone": "'mʌŋki", "ukphone": "'mʌŋkɪ"}, {"name": "bird", "trans": ["鸟"], "usphone": "bɝd", "ukphone": "bɜːd"}, {"name": "tiger", "trans": ["老虎"], "usphone": "'taɪɡɚ", "ukphone": "'taɪgə"}, {"name": "panda", "trans": ["大熊猫"], "usphone": "'pændə", "ukphone": "'pændə"}, {"name": "zoo", "trans": ["动物园"], "usphone": "zu", "ukphone": "zuː"}, {"name": "funny", "trans": ["滑稽的；好笑的"], "usphone": "'fʌni", "ukphone": "'fʌnɪ"}, {"name": "bread", "trans": ["面包"], "usphone": "brɛd", "ukphone": "bred"}, {"name": "juice", "trans": ["果汁"], "usphone": "dʒus", "ukphone": "dʒuːs"}, {"name": "egg", "trans": ["蛋"], "usphone": "ɛɡ", "ukphone": "eg"}, {"name": "milk", "trans": ["牛奶"], "usphone": "mɪlk", "ukphone": "mɪlk"}, {"name": "water", "trans": ["水"], "usphone": "ˈwɔtɚ", "ukphone": "'wɔːtə"}, {"name": "cake", "trans": ["蛋糕"], "usphone": "kek", "ukphone": "keɪk"}, {"name": "fish", "trans": ["鱼"], "usphone": "fɪʃ", "ukphone": "fɪʃ"}, {"name": "rice", "trans": ["米饭"], "usphone": "raɪs", "ukphone": "raɪs"}, {"name": "one", "trans": ["一"], "usphone": "wʌn", "ukphone": "wʌn"}, {"name": "two", "trans": ["二"], "usphone": "tu", "ukphone": "tuː"}, {"name": "three", "trans": ["三"], "usphone": "θri", "ukphone": "θriː"}, {"name": "four", "trans": ["四"], "usphone": "fɔr", "ukphone": "fɔː"}, {"name": "five", "trans": ["五"], "usphone": "faɪv", "ukphone": "faɪv"}, {"name": "six", "trans": ["六"], "usphone": "sɪks", "ukphone": "sɪks"}, {"name": "seven", "trans": ["七"], "usphone": "'sɛvn", "ukphone": "'sev(ə)n"}, {"name": "eight", "trans": ["八"], "usphone": "et", "ukphone": "eɪt"}, {"name": "nine", "trans": ["九"], "usphone": "naɪn", "ukphone": "naɪn"}, {"name": "ten", "trans": ["十"], "usphone": "tɛn", "ukphone": "ten"}, {"name": "brother", "trans": ["兄；弟"], "usphone": "'brʌðɚ", "ukphone": "'brʌðə"}, {"name": "plate", "trans": ["盘子"], "usphone": "pleɪt", "ukphone": "pleɪt"}],
+					current:0,
+					word: null,
+					items: null,
+					trans: null,
+					mode: 0
+				},
+				mounted(){
+				    var _this = this;  
+			      	document.onkeydown = function(e) {            
+			      		event.preventDefault();
+			      		var key = window.event.keyCode;
+			      		var char = _this.parse(_this.word["name"])[_this.keyIndex].toLowerCase();           
+			      		if(_this.getKeyCode(char) == key){
+			      			
+			      			if(_this.mode == 0){
+			      				var $temp = $("#letters").find("span").eq(_this.keyIndex);
+				      			$temp.removeClass("letter");
+				      			$temp.removeClass("letter_fail");
+				      			$temp.addClass("letter_success");
+				      			_this.keyIndex = _this.keyIndex + 1;
+			      			}else{
+			      				var $temp = $("#letters").find("span").eq(_this.keyIndex);
+			      				$temp.removeClass("letter");
+				      			$temp.removeClass("letter_fail");
+				      			$temp.addClass("letter_success");
+			      				$temp.find("label").eq(0).html(char);
+			      				_this.keyIndex = _this.keyIndex + 1;
+			      			}
+			      			
+			      			if(_this.keyIndex == _this.items.length){
+			      				_this.nextWord();
+			      			}
+			      		}else{
+			      			if(_this.mode == 0){
+				      			var $temp = $("#letters").find("span").eq(_this.keyIndex);
+				      			$temp.removeClass("letter");
+				      			$temp.removeClass("letter_success");
+				      			$temp.addClass("letter_fail");
+			      			}else{
+			      				_this.loadAudio(_this.word["name"]);
+			      				_this.clearBlank();
+			      				_this.keyIndex = 0;
+			      			}
+			      		}
+			        };
+			    },
+				methods:{
+					clearBlank: function(){
+						$("#letters").find("span").each(function(){
+	      					$(this).removeClass("letter_fail");
+	      					$(this).removeClass("letter");
+	      					$(this).addClass("letter");
+	      					$(this).find("label").eq(0).html("&nbsp;&nbsp;&nbsp;");
+	      				});
+					},
+					parse: function(word){
+						var result = [];
+						for(var i = 0; i < word.length; i++){
+							result.push(word[i]);
+						}
+						return result;
+					},
+					toggle: function(){
+						if(this.mode == 0){
+							$(".option").text("默写");
+							this.mode = 1;
+							$("#letters").find("span").each(function(){
+								if($(this).hasClass("letter")){
+									$(this).removeClass("letter");
+								}
+							});
+							this.readData(this.words[this.current]);
+						}else{
+							$(".option").text("记忆");
+							this.mode = 0;
+							$("#letters").find("span").each(function(){
+								if($(this).hasClass("letter_underlined")){
+									$(this).removeClass("letter_underlined");
+								}
+							});
+							this.readData(this.words[this.current]);
+						}
+					},
+					getKeyCode:  function(key) {
+						  if(key == " "){
+						  	return 32;
+						  }
+						  var key_code;
+						  switch (key) {
+						  case '0' || 'equal braceright':
+						   key_code = 48;
+						   break;
+						  case '1' || 'exclam onesuperior':
+						   key_code = 49;
+						   break;
+						  case '2' || 'quotedbl twosuperior':
+						   key_code = 50;
+						   break;
+						  case '3' || 'section threesuperior':
+						   key_code = 51;
+						   break;
+						  case '4' || 'dollar':
+						   key_code = 52;
+						   break;
+						  case '5' || 'percent':
+						   key_code = 53;
+						   break;
+						  case '6' || 'ampersand':
+						   key_code = 54;
+						   break;
+						  case '7' || 'slash braceleft':
+						   key_code = 55;
+						   break;
+						  case '8' || 'parenleft bracketleft':
+						   key_code = 56;
+						   break;
+						  case '9' || 'parenright bracketright':
+						   key_code = 57;
+						   break;
+						  case 'a' || 'A':
+						   key_code = 65;
+						   break;
+						  case 'b' || 'B':
+						   key_code = 66;
+						   break;
+						  case 'c' || 'C':
+						   key_code = 67;
+						   break;
+						  case 'd' || 'D':
+						   key_code = 68;
+						   break;
+						  case 'e' || 'E':
+						   key_code = 69;
+						   break;
+						  case 'f' || 'F':
+						   key_code = 70;
+						   break;
+						  case 'g' || 'G':
+						   key_code = 71;
+						   break;
+						  case 'h' || 'H':
+						   key_code = 72;
+						   break;
+						  case 'i' || 'I':
+						   key_code = 73;
+						   break;
+						  case 'j' || 'J':
+						   key_code = 74;
+						   break;
+						  case 'k' || 'K':
+						   key_code = 75;
+						   break;
+						  case 'l' || 'L':
+						   key_code = 76;
+						   break;
+						  case 'm' || 'M':
+						   key_code = 77;
+						   break;
+						  case 'n' || 'N':
+						   key_code = 78;
+						   break;
+						  case 'o' || 'O':
+						   key_code = 79;
+						   break;
+						  case 'p' || 'P':
+						   key_code = 80;
+						   break;
+						  case 'q' || 'Q':
+						   key_code = 81;
+						   break;
+						  case 'r' || 'R':
+						   key_code = 82;
+						   break;
+						  case 's' || 'S':
+						   key_code = 83;
+						   break;
+						  case 't' || 'T':
+						   key_code = 84;
+						   break;
+						  case 'u' || 'U':
+						   key_code = 85;
+						   break;
+						  case 'v' || 'V':
+						   key_code = 86;
+						   break;
+						  case 'w' || 'W':
+						   key_code = 87;
+						   break;
+						  case 'x' || 'X':
+						   key_code = 88;
+						   break;
+						  case 'y' || 'Y':
+						   key_code = 89;
+						   break;
+						  case 'z' || 'Z':
+						   key_code = 90;
+						   break;
+						  case 'KP_0' || 'KP_0':
+						   key_code = 96;
+						   break;
+						  case 'KP_1' || 'KP_1':
+						   key_code = 97;
+						   break;
+						  case 'KP_2' || 'KP_2':
+						   key_code = 98;
+						   break;
+						  case 'KP_3' || 'KP_3':
+						   key_code = 99;
+						   break;
+						  case 'KP_4' || 'KP_4':
+						   key_code = 100;
+						   break;
+						  case 'KP_5' || 'KP_5':
+						   key_code = 101;
+						   break;
+						  case 'KP_6' || 'KP_6':
+						   key_code = 102;
+						   break;
+						  case 'KP_7' || 'KP_7':
+						   key_code = 103;
+						   break;
+						  case 'KP_8' || 'KP_8':
+						   key_code = 104;
+						   break;
+						  case 'KP_9' || 'KP_9':
+						   key_code = 105;
+						   break;
+						  default:
+						   key_code = -1;
+						  }
+						  return key_code;
+					},
+					readData: function(w){
+						this.word = w;
+					    this.trans = this.word["trans"][0];
+					 	//    var msg = new SpeechSynthesisUtterance(this.word["name"]);
+						// speechSynthesis.speak(msg);
+						this.loadAudio(this.word["name"]);
+
+						if(this.mode == 0){
+							$("#letters").find("span").each(function(){
+								$(this).removeClass("letter_fail");
+			      				$(this).removeClass("letter_success");
+								$(this).addClass("letter");
+							});
+
+							this.items = this.parse(this.word["name"]);
+						}else{
+							$("#letters").find("span").each(function(){
+								$(this).find("label").eq(0).html('&nbsp;&nbsp;&nbsp;');
+      						});
+	      					console.log("before" + $("#letters").find("span").length);
+
+							var items = this.parse(this.word["name"]);
+							var temp = [];
+							for(var i = 0; i < items.length; i++){
+								temp.push('&nbsp;&nbsp;&nbsp;');
+							}
+							this.items = temp;
+							console.log("after" + $("#letters").find("span").length + "/" + this.items.length);
+						}
+					},
+					nextWord: function(){
+						if(this.current < this.words.length -1){
+							this.keyIndex = 0;
+							this.readData(this.words[++this.current]);
+						}else{
+							alert("恭喜完成所有单词！");
+						}
+					},
+					lastWord: function(){
+						if(this.current > 0){
+							this.keyIndex = 0;
+							this.readData(this.words[--this.current]);
+						}
+					},
+					loadAudio: function(w){
+						$("#player").attr("src", 'https://dict.youdao.com/dictvoice?audio='+w+"&type=2");
+					}
+				}
+			});
+
+			$(document).ready(function(){
+				$("ul li").click(function() {
+					$(this).siblings().removeClass("is-active");
+					$(this).addClass("is-active");
+				});
+				
+				$("#bar-btn").click(function(){
+					$("#navbarBasicExample").toggleClass("is-active");
+				});
+
+                vue.readData(vue.words[0]);
+			});
+		</script>
+	</body>
+</html>
+
