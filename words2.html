@@ -241,7 +241,7 @@
 
 <body>
 	<div id="app">
-		<select class="mySelect" @change="select">
+		<select class="mySelect" @change="select" v-model="nowSelected">
 			<option value="07_01">七年级上册</option>
 			<option value="07_02">七年级下册</option>
 			<option value="08_01">八年级上册</option>
@@ -302,11 +302,13 @@
 			data: {
 				keyIndex: 0,
 				wordList: list_07_01,
+				wordListName: "list_07_01",
 				current: 0,
 				word: null,
 				items: null,
 				trans: null,
 				mode: 0,
+				nowSelected: "",
 				keyboard1: ['Q', 'W', "E", "R", "T", "Y", "U", "I", "O", "P"],
 				keyboard2: ['A', 'S', "D", "F", "G", "H", "J", "K", "L", " "],
 				keyboard3: ['Z', 'X', "C", "V", "B", "N", "M", "!", "'", "?"]
@@ -362,6 +364,36 @@
 						}
 					}
 				};
+
+				const objStr = localStorage.getItem('cache');
+				console.log(objStr)
+				if (objStr == undefined || objStr === '') {
+					const obj = { dict: "list_07_01", index: 0 };
+					localStorage.setItem('cache', JSON.stringify(obj)); // 使用JSON.stringify将对象转换为字符串
+					_this.nowSelected = this.wordListName.replace("list_", "")
+				} else {
+					const obj = JSON.parse(objStr);
+					if (obj !== undefined) {
+						if (obj.dict == "07_01") {
+							_this.wordList = list_07_01;
+						} else if (obj.dict == "07_02") {
+							_this.wordList = list_07_02;
+						} else if (obj.dict == "08_01") {
+							_this.wordList = list_08_01;
+						} else if (obj.dictem == "08_02") {
+							_this.wordList = list_08_02;
+						} else if (obj.dict == "09") {
+							_this.wordList = list_09;
+						}
+						_this.keyIndex = 0;
+						_this.current = obj.index;
+						console.log(_this.current)
+						_this.wordListName = obj.dict;
+						_this.nowSelected = obj.dict.replace("list_", "")
+						this.readData(_this.wordList[_this.current]);
+					}
+
+				}
 			},
 			methods: {
 				keyIn(key) {
@@ -491,7 +523,11 @@
 					}
 					this.current = 0;
 					this.keyIndex = 0;
+					this.wordListName = item;
 					this.readData(this.wordList[0]);
+
+					const obj = { dict: item, index: 0 };
+					localStorage.setItem('cache', JSON.stringify(obj)); // 使用JSON.stringify将对象转换为字符串
 				},
 				getKeyCode: function (key) {
 					console.log(key)
@@ -673,6 +709,10 @@
 					if (this.current < this.wordList.length - 1) {
 						this.keyIndex = 0;
 						this.readData(this.wordList[++this.current]);
+
+						const obj = { dict: this.wordListName, index: this.current };
+						localStorage.setItem('cache', JSON.stringify(obj));
+						console.log(obj)
 					} else {
 						alert("恭喜完成所有单词！");
 					}
@@ -681,6 +721,8 @@
 					if (this.current > 0) {
 						this.keyIndex = 0;
 						this.readData(this.wordList[--this.current]);
+						const obj = { dict: this.wordListName, index: this.current };
+						localStorage.setItem('cache', JSON.stringify(obj));
 					}
 				},
 				loadAudio: function (w) {
@@ -689,9 +731,6 @@
 			}
 		});
 
-		$(function () {
-			vue.readData(vue.wordList[0]);
-		});
 	</script>
 </body>
 
