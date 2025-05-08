@@ -1,0 +1,696 @@
+<html>
+	<head>
+
+		<meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="https://static.runoob.com/assets/foundation-icons/foundation-icons.css">
+		<link rel="stylesheet" href="https://dayandnight2018.github.io/lib/css/foundation-icons.css">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+		<link rel="stylesheet" href="https://dayandnight2018.github.io/lib/css/fontAwsome.css">		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css"/>
+		<link rel="stylesheet" href="https://dayandnight2018.github.io/lib/css/bulma.css"/>
+		
+		<script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+		<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+		<script src="https://dayandnight2018.github.io/lib/js/vue.js"></script>
+		<script src="https://dayandnight2018.github.io/lib/js/vueResource.js"></script>
+		<script src="https://dayandnight2018.github.io/lib/js/jquery.js"></script>
+		
+		
+
+		<script src="07_01.js"></script>
+		<script src="07_02.js"></script>
+		<script src="08_01.js"></script>
+		<script src="08_02.js"></script>
+		<script src="09.js"></script>
+		<style type="text/css">
+			html,body{
+				width: 100%;
+				height: 100%;
+				background: #111827;
+			}
+
+			#main{
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				align-items: center;
+				width: 100%;
+				height: 100%;
+			}
+
+			#letters{
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.letter_underlined{
+				border-bottom: 2px solid white; 
+				color:white;
+				font-size: 60px;
+				margin: 0px 5px;
+				min-width: 45px;
+				max-width: 45px;
+				min-height: 100px;
+				max-height: 100px;
+			}
+
+			.letter_success{
+				color: lightgreen;
+				font-size: 60px;
+				margin: 0px 5px;
+				min-width: 45px;
+				max-width: 45px;
+				min-height: 100px;
+				max-height: 100px;
+				font-family: fantasy;
+			}
+
+			.letter_fail{
+				color: red;
+				font-size: 60px;
+				margin: 0px 5px;
+				min-width: 45px;
+				max-width: 45px;
+				min-height: 100px;
+				max-height: 100px;
+			}
+
+			.letter{
+				color:white;
+				font-size: 60px;
+				margin: 0px 5px;
+				min-width: 45px;
+				max-width: 45px;
+				min-height: 100px;
+				max-height: 100px;
+				font-family: fantasy;
+			}
+
+			.letter label{
+				width: 100%;
+				margin: 0px auto;
+				text-align: center;
+				display: inline-block;
+			}
+
+			.letter_success label{
+				width: 100%;
+				margin: 0px auto;
+				text-align: center;
+				display: inline-block;
+			}
+
+			.letter_fail label{
+				width: 100%;
+				margin: 0px auto;
+				text-align: center;
+				display: inline-block;
+			}
+
+			#present{
+				width: 80%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+
+			#trans{
+				margin-top:50px;
+				font-size: 20px;
+				color: silver;
+			}
+
+			@media only screen and (max-width: 600px) {
+				.letter {
+					color: white;
+					font-size: 1.5rem;
+					margin: 0;
+					min-width: auto;
+					max-width: none;
+					min-height: 100px;
+					max-height: 100px;
+					font-family: fantasy;
+				}
+	
+				.letter_underlined{
+					border-bottom: 2px solid white; 
+					color:white;
+					font-size: 1.5rem;
+					margin: 0;
+					min-width: auto;
+					max-width: none;
+					min-height: 100px;
+					max-height: 100px;
+				}
+	
+				.letter_success{
+					color: lightgreen;
+					font-size: 1.5rem;
+					margin: 0;
+					min-width: auto;
+					max-width: none;
+					min-height: 100px;
+					max-height: 100px;
+					font-family: fantasy;
+				}
+
+				.largePadding{
+				padding: 0 0.5rem !important;
+			}
+
+				.keyboard{
+					display: block !important;
+					margin-top: 0.5rem;
+				}
+
+				.keyboard span{
+					background: white;
+					color: black;
+					border: 1px solid silver;
+					font-size: 1rem;
+					padding: 0.2rem;
+					margin: 2px;
+				}
+
+				.keyboard div{
+					margin: 8px auto;
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+				}
+			}
+
+
+			button{
+				background: transparent;
+				font-size: 40px;
+				color: white;
+				border: none;
+			}
+
+			button.option{
+				font-size: 20px;
+				position: fixed;
+				right: 20px;
+				top: 20px;
+				border: 1px solid silver;
+				padding: 5px;
+				border-radius: 8px;
+			}
+			.mySelect{
+				font-size: 20px;
+				position: fixed;
+				left: 20px;
+				top: 20px;
+				border: 1px solid silver;
+				padding: 5px;
+				border-radius: 8px;
+				background: transparent;
+				color: white;
+			}
+
+			.innerPadding{
+				padding: 0 2px;
+			}
+
+			.largePadding{
+				padding: 0 0.5rem !important;
+			}
+
+			.keyboard{
+				display: none;
+			}
+
+			.keyboard span{
+				background: white;
+				color: black;
+				border: 1px solid silver;
+				font-size: 1rem;
+				padding: 0.2rem;
+				margin: 2px;
+			}
+
+			.keyboard div{
+				margin: 8px auto;
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<select class="mySelect" @change="select">
+				<option value="07_01">七年级上册</option>
+				<option value="07_02">七年级下册</option>
+				<option value="08_01">八年级上册</option>
+				<option value="08_02">八年级下册</option>
+				<option value="09">九年级</option>
+			</select>
+
+			<button v-on:click="toggle()" class="option">
+				记忆
+			</button>
+
+			<div id="main">
+				<button v-on:click="lastWord()">
+					&lt;
+				</button>
+
+				<div id="present">
+					<div id="letters">
+						<span :class="item.effect" v-for="item in items">
+							<label :class="[item.data===' ' ? 'innerPadding' : '']">{{item.data}}&nbsp;</label>
+						</span> 
+					</div>
+					<div id="trans">
+						<p v-for="ele in trans">
+							<span v-if="ele.pos">[{{ele.pos}}]</span>&nbsp;&nbsp;&nbsp;&nbsp;{{ele.tranCn}}
+						</p>
+					</div>
+
+					<div class="keyboard">
+						<div>
+							<span v-for="item in keyboard1" @click="keyIn(item)">{{item}}</span>
+						</div>
+						<div>
+							<span v-for="item in keyboard2" @click="keyIn(item)" :class="[item ===' ' ? 'largePadding' : '']">{{item}}</span>
+						</div>
+						<div>
+							<span v-for="item in keyboard3" @click="keyIn(item)">{{item}}</span>
+						</div>
+					</div>
+				</div>
+
+				<button v-on:click="nextWord()">
+					&gt;
+				</button>
+			</div>
+
+			<audio autoplay="autoplay" controls="controls" id="player" style="display: none;">
+				<source id="source" ></source>
+			</audio>
+
+		</div>
+
+		<script type="text/javascript">
+			var vue = new Vue({
+				el:"#app",
+				data:{
+					keyIndex:0,
+					wordList: list_07_01,
+					current:0,
+					word: null,
+					items: null,
+					trans: null,
+					mode: 0,
+					keyboard1: ['Q', 'W', "E", "R", "T", "Y", "U", "I", "O", "P"],
+					keyboard2: ['A', 'S', "D", "F", "G", "H", "J", "K", "L", " "],
+					keyboard3: ['Z', 'X', "C", "V", "B", "N", "M", "!", "'", "?"]
+				},
+				created(){
+					// this.readData(this.wordList[0]);
+				},
+				mounted(){
+				    var _this = this; 
+			      	document.onkeydown = function(e) {            
+			      		event.preventDefault();
+			      		// 实际按压的按键
+			      		var key = window.event.keyCode;
+			      		// 预期的字符
+			      		var char = _this.parse(_this.word["content"]["word"]["wordHead"])[_this.keyIndex].toLowerCase(); 
+			      		if (key == 37){
+			      			_this.lastWord();
+			      			return;
+			      		}
+			      		if (key == 39){
+							_this.nextWord();
+							return;
+			      		}
+						
+			      		// 输入正确          
+			      		if(_this.getKeyCode(char) == key){
+			      			
+			      			// 记忆模式
+			      			if(_this.mode == 0){
+				      			_this.items[_this.keyIndex].effect = "letter_success";
+				      			_this.keyIndex = _this.keyIndex + 1;
+			      			} else{
+			      				// 考验模式
+				      			_this.items[_this.keyIndex].data = _this.parse(_this.word["content"]["word"]["wordHead"])[_this.keyIndex];
+				      			_this.items[_this.keyIndex].effect = "letter_success";
+			      				_this.keyIndex = _this.keyIndex + 1;
+			      			}
+			      			
+			      			if(_this.keyIndex == _this.items.length){
+			      				setTimeout(function(){_this.nextWord()}, 500);
+			      			}
+			      		}else{
+							if (event.shiftKey){
+								return;
+							}
+			      			// 输入错误
+			      			if(_this.mode == 0){
+				      			_this.items[_this.keyIndex].effect = "letter_fail";
+			      			}else{
+			      				_this.loadAudio(_this.word["content"]["word"]["wordHead"]);
+			      				_this.readData(_this.word);
+			      				_this.keyIndex = 0;
+			      			}
+			      		}
+			        };
+			    },
+				methods:{
+					keyIn(key){
+						let _this = this;
+			      		// 预期的字符
+			      		var char = _this.parse(_this.word["content"]["word"]["wordHead"])[_this.keyIndex].toLowerCase(); 
+						
+			      		// 输入正确          
+			      		if(char === key.toLowerCase()){
+			      			
+			      			// 记忆模式
+			      			if(_this.mode == 0){
+				      			_this.items[_this.keyIndex].effect = "letter_success";
+				      			_this.keyIndex = _this.keyIndex + 1;
+			      			} else{
+			      				// 考验模式
+				      			_this.items[_this.keyIndex].data = _this.parse(_this.word["content"]["word"]["wordHead"])[_this.keyIndex];
+				      			_this.items[_this.keyIndex].effect = "letter_success";
+			      				_this.keyIndex = _this.keyIndex + 1;
+			      			}
+			      			
+			      			if(_this.keyIndex == _this.items.length){
+			      				setTimeout(function(){_this.nextWord()}, 500);
+			      			}
+			      		}else{
+			      			// 输入错误
+			      			if(_this.mode == 0){
+				      			_this.items[_this.keyIndex].effect = "letter_fail";
+			      			}else{
+			      				_this.loadAudio(_this.word["content"]["word"]["wordHead"]);
+			      				_this.readData(_this.word);
+			      				_this.keyIndex = 0;
+			      			}
+			      		}
+					},
+					sleep(numberMillis) { 
+					    var now = new Date(); 
+					    var exitTime = now.getTime() + numberMillis; 
+					    while (true) { 
+					        now = new Date(); 
+					        if (now.getTime() > exitTime) 
+					        return; 
+					    } 
+					},
+					parse: function(word){
+						var result = [];
+						for(var i = 0; i < word.length; i++){
+							result.push(word[i]);
+						}
+						return result;
+					},
+					toggle: function(){
+						if(this.mode == 0){
+							$(".option").text("默写");
+							this.mode = 1;
+							$("#letters").find("span").each(function(){
+								if($(this).hasClass("letter")){
+									$(this).removeClass("letter");
+								}
+							});
+							this.readData(this.wordList[this.current]);
+						}else{
+							$(".option").text("记忆");
+							this.mode = 0;
+							$("#letters").find("span").each(function(){
+								if($(this).hasClass("letter_underlined")){
+									$(this).removeClass("letter_underlined");
+								}
+							});
+							this.readData(this.wordList[this.current]);
+						}
+					},
+					select:function(e){
+						var item = e.target.value;
+						if (item == "03_01"){
+							this.wordList = list_03_01;
+						} else if (item == "03_02"){
+							this.wordList = list_03_02;
+						} else if (item == "04_01"){
+							this.wordList = list_04_01;
+						} else if (item == "04_02"){
+							this.wordList = list_04_02;
+						} else if (item == "05_01"){
+							this.wordList = list_05_01;
+						} else if (item == "05_02"){
+							this.wordList = list_05_02;
+						} else if (item == "06_01"){
+							this.wordList = list_06_01;
+						} else if (item == "06_02"){
+							this.wordList = list_06_02;
+						} else if (item == "07_01"){
+							this.wordList = list_07_01;
+						} else if (item == "07_02"){
+							this.wordList = list_07_02;
+						} else if (item == "08_01"){
+							this.wordList = list_08_01;
+						} else if (item == "08_02"){
+							this.wordList = list_08_02;
+						} else if (item == "09"){
+							this.wordList = list_09;
+						} else if (item == "BEC"){
+							this.wordList = BEC;
+						} else if (item == "BET4"){
+							this.wordList = BET4;
+						} else if (item == "CET6"){
+							this.wordList = CET6;
+						} else if (item == "BU"){
+							this.wordList = BU;
+						} else if (item == "GMAT"){
+							this.wordList = GMAT;
+						} else if (item == "GRE"){
+							this.wordList = GRE;
+						} else if (item == "IELTS"){
+							this.wordList = IELTS;
+						} else if (item == "IT"){
+							this.wordList = IT;
+						} else if (item == "MASTER"){
+							this.wordList = MASTER;
+						} else if (item == "P4"){
+							this.wordList = P4;
+						} else if (item == "P8"){
+							this.wordList = P8;
+						} else if (item == "SAT"){
+							this.wordList = SAT;
+						} else if (item == "TOEFL"){
+							this.wordList = TOEFL;
+						}
+						this.current = 0;
+						this.keyIndex = 0;
+						this.readData(this.wordList[0]);
+					},
+					getKeyCode:  function(key) {
+						console.log(key)
+						  if(key == " "){
+						  	return 32;
+						  }
+						  var key_code;
+						  switch (key) {
+						  case '0' || 'equal braceright':
+						   key_code = 48;
+						   break;
+						  case '1' || 'exclam onesuperior':
+						   key_code = 49;
+						   break;
+						  case '2' || 'quotedbl twosuperior':
+						   key_code = 50;
+						   break;
+						  case '3' || 'section threesuperior':
+						   key_code = 51;
+						   break;
+						  case '4' || 'dollar':
+						   key_code = 52;
+						   break;
+						  case '5' || 'percent':
+						   key_code = 53;
+						   break;
+						  case '6' || 'ampersand':
+						   key_code = 54;
+						   break;
+						  case '7' || 'slash braceleft':
+						   key_code = 55;
+						   break;
+						  case '8' || 'parenleft bracketleft':
+						   key_code = 56;
+						   break;
+						  case '9' || 'parenright bracketright':
+						   key_code = 57;
+						   break;
+						  case 'a' || 'A':
+						   key_code = 65;
+						   break;
+						  case 'b' || 'B':
+						   key_code = 66;
+						   break;
+						  case 'c' || 'C':
+						   key_code = 67;
+						   break;
+						  case 'd' || 'D':
+						   key_code = 68;
+						   break;
+						  case 'e' || 'E':
+						   key_code = 69;
+						   break;
+						  case 'f' || 'F':
+						   key_code = 70;
+						   break;
+						  case 'g' || 'G':
+						   key_code = 71;
+						   break;
+						  case 'h' || 'H':
+						   key_code = 72;
+						   break;
+						  case 'i' || 'I':
+						   key_code = 73;
+						   break;
+						  case 'j' || 'J':
+						   key_code = 74;
+						   break;
+						  case 'k' || 'K':
+						   key_code = 75;
+						   break;
+						  case 'l' || 'L':
+						   key_code = 76;
+						   break;
+						  case 'm' || 'M':
+						   key_code = 77;
+						   break;
+						  case 'n' || 'N':
+						   key_code = 78;
+						   break;
+						  case 'o' || 'O':
+						   key_code = 79;
+						   break;
+						  case 'p' || 'P':
+						   key_code = 80;
+						   break;
+						  case 'q' || 'Q':
+						   key_code = 81;
+						   break;
+						  case 'r' || 'R':
+						   key_code = 82;
+						   break;
+						  case 's' || 'S':
+						   key_code = 83;
+						   break;
+						  case 't' || 'T':
+						   key_code = 84;
+						   break;
+						  case 'u' || 'U':
+						   key_code = 85;
+						   break;
+						  case 'v' || 'V':
+						   key_code = 86;
+						   break;
+						  case 'w' || 'W':
+						   key_code = 87;
+						   break;
+						  case 'x' || 'X':
+						   key_code = 88;
+						   break;
+						  case 'y' || 'Y':
+						   key_code = 89;
+						   break;
+						  case 'z' || 'Z':
+						   key_code = 90;
+						   break;
+						  case 'KP_0' || 'KP_0':
+						   key_code = 96;
+						   break;
+						  case 'KP_1' || 'KP_1':
+						   key_code = 97;
+						   break;
+						  case 'KP_2' || 'KP_2':
+						   key_code = 98;
+						   break;
+						  case 'KP_3' || 'KP_3':
+						   key_code = 99;
+						   break;
+						  case 'KP_4' || 'KP_4':
+						   key_code = 100;
+						   break;
+						  case 'KP_5' || 'KP_5':
+						   key_code = 101;
+						   break;
+						  case 'KP_6' || 'KP_6':
+						   key_code = 102;
+						   break;
+						  case 'KP_7' || 'KP_7':
+						   key_code = 103;
+						   break;
+						  case 'KP_8' || 'KP_8':
+						   key_code = 104;
+						   break;
+						  case 'KP_9' || 'KP_9':
+						   key_code = 105;
+						   break;
+						  case "’":
+							key_code = 222;
+							break;
+							case "!":
+							key_code = 49;
+							break;
+							case "?":
+							key_code = 191;
+							break;
+						  default:
+						   key_code = -1;
+						  }
+						  return key_code;
+					},
+					readData: function(w){
+						console.log(w)
+						this.word = w;
+					    this.trans = this.word["content"]["word"]["content"]["trans"];
+						this.loadAudio(this.word["content"]["word"]["wordHead"]);
+
+						if(this.mode == 0){
+							this.items = this.parse(this.word["content"]["word"]["wordHead"]).map(ele=>
+								({ data: ele, effect: "letter"}));
+						}else{
+							this.items = this.parse(this.word["content"]["word"]["wordHead"]).map(ele=>
+								({ data: '&nbsp;&nbsp;&nbsp;', effect: "letter_underlined"}));
+						}
+					},
+					nextWord: function(){
+						if(this.current < this.wordList.length -1){
+							this.keyIndex = 0;
+							this.readData(this.wordList[++this.current]);
+						}else{
+							alert("恭喜完成所有单词！");
+						}
+					},
+					lastWord: function(){
+						if(this.current > 0){
+							this.keyIndex = 0;
+							this.readData(this.wordList[--this.current]);
+						}
+					},
+					loadAudio: function(w){
+						$("#player").attr("src", 'https://dict.youdao.com/dictvoice?audio='+w+"&type=2");
+					}
+				}
+			});
+
+			$(function(){
+				vue.readData(vue.wordList[0]);
+			});
+		</script>
+	</body>
+</html>
