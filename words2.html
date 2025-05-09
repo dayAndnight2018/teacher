@@ -26,6 +26,13 @@
 	<script src="08_01.js"></script>
 	<script src="08_02.js"></script>
 	<script src="09.js"></script>
+	<script src="004_01.js"></script>
+	<script src="004_02.js"></script>
+	<script src="006_01.js"></script>
+	<script src="006_02.js"></script>
+	<script src="006_03.js"></script>
+	<script src="008_01.js"></script>
+	<script src="008_02.js"></script>
 	<style type="text/css">
 		html,
 		body {
@@ -71,7 +78,8 @@
 			max-width: 45px;
 			min-height: 100px;
 			max-height: 100px;
-			font-family: fantasy;
+			font-family: 'Times New Roman';
+			font-weight: bolder;
 		}
 
 		.letter_fail {
@@ -92,7 +100,8 @@
 			max-width: 45px;
 			min-height: 100px;
 			max-height: 100px;
-			font-family: fantasy;
+			font-family: 'Times New Roman';
+			font-weight: bolder;
 		}
 
 		.letter label {
@@ -139,7 +148,8 @@
 				max-width: none;
 				min-height: 100px;
 				max-height: 100px;
-				font-family: fantasy;
+				font-family: 'Times New Roman';
+				font-weight: bolder;
 			}
 
 			.letter_underlined {
@@ -161,7 +171,8 @@
 				max-width: none;
 				min-height: 100px;
 				max-height: 100px;
-				font-family: fantasy;
+				font-family: 'Times New Roman';
+				font-weight: bolder;
 			}
 
 			.largePadding {
@@ -247,6 +258,13 @@
 			<option value="08_01">八年级上册</option>
 			<option value="08_02">八年级下册</option>
 			<option value="09">九年级</option>
+			<option value="004_01">专四（一）</option>
+			<option value="004_02">专四（二）</option>
+			<option value="008_01">专八（一）</option>
+			<option value="008_02">专八（二）</option>
+			<option value="006_01">CET6(一)</option>
+			<option value="006_02">CET6(二)</option>
+			<option value="006_03">CET6(三)</option>
 		</select>
 
 		<button v-on:click="toggle()" class="option">
@@ -367,7 +385,7 @@
 
 				const objStr = localStorage.getItem('cache');
 				console.log(objStr)
-				if (objStr == undefined || objStr === '') {
+				if (objStr == undefined || objStr == null || objStr === '') {
 					const obj = { dict: "list_07_01", index: 0 };
 					localStorage.setItem('cache', JSON.stringify(obj)); // 使用JSON.stringify将对象转换为字符串
 					_this.nowSelected = this.wordListName.replace("list_", "")
@@ -384,6 +402,26 @@
 							_this.wordList = list_08_02;
 						} else if (obj.dict == "09") {
 							_this.wordList = list_09;
+						}else if (obj.dict == "004_01") {
+							_this.wordList = list_004_01;
+						}
+						else if (obj.dict == "004_02") {
+							_this.wordList = list_004_02;
+						}
+						else if (obj.dict == "008_01") {
+							_this.wordList = list_008_01;
+						}
+						else if (obj.dict == "008_02") {
+							_this.wordList = list_008_02;
+						}
+						else if (obj.dict == "006_01") {
+							_this.wordList = list_006_01;
+						}
+						else if (obj.dict == "006_02") {
+							_this.wordList = list_006_02;
+						}
+						else if (obj.dict == "006_03") {
+							_this.wordList = list_006_03;
 						}
 						_this.keyIndex = 0;
 						_this.current = obj.index;
@@ -520,6 +558,20 @@
 						this.wordList = SAT;
 					} else if (item == "TOEFL") {
 						this.wordList = TOEFL;
+					}else if (item == "004_01") {
+						this.wordList = list_004_01;
+					}else if (item == "004_02") {
+						this.wordList = list_004_02;
+					}else if (item == "008_01") {
+						this.wordList = list_008_01;
+					}else if (item == "008_02") {
+						this.wordList = list_008_02;
+					}else if (item == "006_01") {
+						this.wordList = list_006_01;
+					}else if (item == "006_02") {
+						this.wordList = list_006_02;
+					}else if (item == "006_03") {
+						this.wordList = list_006_03;
 					}
 					this.current = 0;
 					this.keyIndex = 0;
