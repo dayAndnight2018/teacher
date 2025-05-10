@@ -365,7 +365,7 @@
 
 
 
-				<div v-if="phrases && phrases.phrases && phrases.phrases.length > 0" style="font-size: 0.8rem;align-self: flex-start;width: 100%;">
+				<div v-if="phrases && phrases.phrases && phrases.phrases.length > 0 && mode === 0" style="font-size: 0.8rem;align-self: flex-start;width: 100%;">
 					<p style="color: white;">短语</p>
 					<div style="display: flex;flex-direction: column;flex-wrap: wrap;height: 8rem;overflow: scroll;justify-content: flex-start;align-items: flex-start;">
 						<div v-for="syno in phrases.phrases" class="card" style="background: whitesmoke; margin: 2px;">
