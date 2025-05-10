@@ -45,9 +45,11 @@
 			display: flex;
 			flex-direction: row;
 			justify-content: space-around;
-			align-items: center;
+			align-items: flex-start;
 			width: 100%;
-			height: 100%;
+			height: calc(100% - 5rem);
+			margin-top: 5rem;
+			overflow-y: scroll;
 		}
 
 		#letters {
@@ -55,8 +57,9 @@
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
-			width: 98%;
+			width: 100%;
 			flex-wrap: wrap;
+			position: relative;
 		}
 
 		.letter_underlined {
@@ -66,8 +69,6 @@
 			margin: 0px 5px;
 			min-width: 45px;
 			max-width: 45px;
-			min-height: 100px;
-			max-height: 100px;
 		}
 
 		.letter_success {
@@ -76,8 +77,6 @@
 			margin: 0px 5px;
 			min-width: 45px;
 			max-width: 45px;
-			min-height: 100px;
-			max-height: 100px;
 			font-family: 'Times New Roman';
 			font-weight: bolder;
 		}
@@ -88,8 +87,6 @@
 			margin: 0px 5px;
 			min-width: 45px;
 			max-width: 45px;
-			min-height: 100px;
-			max-height: 100px;
 		}
 
 		.letter {
@@ -98,8 +95,6 @@
 			margin: 0px 5px;
 			min-width: 45px;
 			max-width: 45px;
-			min-height: 100px;
-			max-height: 100px;
 			font-family: 'Times New Roman';
 			font-weight: bolder;
 		}
@@ -126,7 +121,7 @@
 		}
 
 		#present {
-			width: 80%;
+			width: 96%;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
@@ -137,19 +132,32 @@
 			margin-top: 50px;
 			font-size: 20px;
 			color: silver;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 		}
 
 		@media only screen and (max-width: 600px) {
 			.letter {
 				color: white;
-				font-size: 1.5rem;
+				font-size: 3rem;
 				margin: 0;
 				min-width: auto;
 				max-width: none;
-				min-height: 100px;
-				max-height: 100px;
 				font-family: 'Times New Roman';
 				font-weight: bolder;
+			}
+
+			.card {
+				display: inline;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				border-radius: 5px;
+				background: white;
+				padding: 0.5rem;
+				min-width: 60%;
 			}
 
 			.letter_underlined {
@@ -159,8 +167,6 @@
 				margin: 0 2px;
 				min-width: auto;
 				max-width: none;
-				min-height: 100px;
-				max-height: 100px;
 			}
 
 			.letter_success {
@@ -169,8 +175,6 @@
 				margin: 0;
 				min-width: auto;
 				max-width: none;
-				min-height: 100px;
-				max-height: 100px;
 				font-family: 'Times New Roman';
 				font-weight: bolder;
 			}
@@ -247,11 +251,25 @@
 		.keyboard {
 			display: none;
 		}
+
+		.card {
+			display: inline;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			border-radius: 5px;
+			background: white;
+			padding: 0.5rem;
+		}
+
+		div::-webkit-scrollbar {
+			display: none;
+		}
 	</style>
 </head>
 
 <body>
-	<div id="app">
+	<div id="app" style="overflow: hidden;">
 		<select class="mySelect" @change="select" v-model="nowSelected">
 			<option value="07_01">七年级上册</option>
 			<option value="07_02">七年级下册</option>
@@ -272,23 +290,96 @@
 		</button>
 
 		<div id="main">
-			<button v-on:click="lastWord()">
-				&lt;
-			</button>
 
 			<div id="present">
+
 				<div id="letters">
+					<button v-on:click="lastWord()" style="position: absolute;left: 0;">
+						&lt;
+					</button>
 					<span :class="item.effect" v-for="item in items">
 						<label :class="[item.data===' ' ? 'innerPadding' : '']" v-html="item.data"></label>
 					</span>
+					<button v-on:click="nextWord()" style="position: absolute; right: 0;">
+						&gt;
+					</button>
 				</div>
-				<div id="trans">
-					<p v-for="ele in trans">
-						<span v-if="ele.pos">[{{ele.pos}}]</span>&nbsp;&nbsp;&nbsp;&nbsp;{{ele.tranCn}}
+
+				<div v-show="phone || trans" style="color:#ffa8a8; font-size: 0.8rem; margin: 5px 0;">
+					<span v-show="phone">[{{phone}}]</span>
+					<span v-for="ele in trans" style="margin: 0 1rem;">
+						<span v-if="ele.pos">[{{ele.pos}}]</span>&nbsp;&nbsp;{{ele.tranCn}};
+					</span>
+				</div>
+
+				<div v-if="memo && mode === 0" style="background: white;font-size: 0.8rem;" class="card">
+					<p>
+						{{memo.val}}
 					</p>
 				</div>
 
-				<div class="keyboard">
+				<div v-if="sentence && mode === 0"
+					style="margin: 5px auto; font-size: 0.8rem;align-self: flex-start; width: 100%; ">
+					<p style="color: white;">例句</p>
+					<div
+						style="color: black; background: whitesmoke;padding: 0.5rem; box-sizing: border-box; border-radius: 5px;">
+						<p>
+							{{sentence.sContent}}
+						</p>
+						<p>
+							{{sentence.sCn}}
+						</p>
+					</div>
+				</div>
+
+				<div v-if="synos && synos.synos && synos.synos.length > 0 && mode === 0"
+					style="font-size: 0.8rem; align-self: flex-start;width: 100%;">
+					<p style="color: white;">近义词</p>
+					<div
+						style="display:flex;flex-direction: row; justify-content: flex-start;overflow-x: scroll; width: 100%;">
+						<div v-for="syno in synos.synos" style="background: whitesmoke;margin: 5px;" class="card">
+							<!-- <p>
+								[{{syno.pos}}]{{syno.tran}}
+							</p> -->
+							<p v-for="hwds in syno.hwds.slice(0, 2)">
+								{{hwds.w}}
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div v-if="real && real.rels && real.rels.length > 0 && mode === 0"
+					style="font-size: 0.8rem;align-self: flex-start;width: 100%;">
+					<p style="color: white;">同根词</p>
+					<div style="display: flex;flex-direction: row; overflow-x: scroll; width: 100%;">
+						<div v-for="syno in [...real.rels]" style="background: whitesmoke; margin: 2px;" class="card">
+							<div v-for="hwds in [...syno.words]">
+								{{hwds.hwd}}
+								<p>
+									<span style="margin: 0 5px;">[{{syno.pos}}]</span>{{hwds.tran}}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div v-if="phrases && phrases.phrases && phrases.phrases.length > 0" style="font-size: 0.8rem;align-self: flex-start;width: 100%;">
+					<p style="color: white;">短语</p>
+					<div style="display: flex;flex-direction: column;flex-wrap: wrap;height: 8rem;overflow: scroll;justify-content: flex-start;align-items: flex-start;">
+						<div v-for="syno in phrases.phrases" class="card" style="background: whitesmoke; margin: 2px;">
+							<p>
+								{{syno.pContent}} 
+							</p>
+							<p>
+								{{syno.pCn}}
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="keyboard" v-if="mode === 1">
 					<div>
 						<span v-for="item in keyboard1" @click="keyIn(item)">{{item}}</span>
 					</div>
@@ -302,9 +393,7 @@
 				</div>
 			</div>
 
-			<button v-on:click="nextWord()">
-				&gt;
-			</button>
+
 		</div>
 
 		<audio autoplay="autoplay" controls="controls" id="player" style="display: none;">
@@ -325,6 +414,12 @@
 				word: null,
 				items: null,
 				trans: null,
+				phone: null,
+				synos: [],
+				phrases: [],
+				memo: null,
+				sentence: "",
+				real: [],
 				mode: 0,
 				nowSelected: "",
 				keyboard1: ['Q', 'W', "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -402,7 +497,7 @@
 							_this.wordList = list_08_02;
 						} else if (obj.dict == "09") {
 							_this.wordList = list_09;
-						}else if (obj.dict == "004_01") {
+						} else if (obj.dict == "004_01") {
 							_this.wordList = list_004_01;
 						}
 						else if (obj.dict == "004_02") {
@@ -558,19 +653,19 @@
 						this.wordList = SAT;
 					} else if (item == "TOEFL") {
 						this.wordList = TOEFL;
-					}else if (item == "004_01") {
+					} else if (item == "004_01") {
 						this.wordList = list_004_01;
-					}else if (item == "004_02") {
+					} else if (item == "004_02") {
 						this.wordList = list_004_02;
-					}else if (item == "008_01") {
+					} else if (item == "008_01") {
 						this.wordList = list_008_01;
-					}else if (item == "008_02") {
+					} else if (item == "008_02") {
 						this.wordList = list_008_02;
-					}else if (item == "006_01") {
+					} else if (item == "006_01") {
 						this.wordList = list_006_01;
-					}else if (item == "006_02") {
+					} else if (item == "006_02") {
 						this.wordList = list_006_02;
-					}else if (item == "006_03") {
+					} else if (item == "006_03") {
 						this.wordList = list_006_03;
 					}
 					this.current = 0;
@@ -747,6 +842,32 @@
 					console.log(w)
 					this.word = w;
 					this.trans = this.word["content"]["word"]["content"]["trans"];
+					this.phone = this.word["content"]["word"]["content"]["phone"];
+					if (this.word["content"]["word"]["content"]["remMethod"]) {
+						this.memo = this.word["content"]["word"]["content"]["remMethod"];
+					} else {
+						this.memo = null;
+					}
+					if (this.word["content"]["word"]["content"]["syno"]) {
+						this.synos = this.word["content"]["word"]["content"]["syno"];
+					} else {
+						this.synos = null;
+					}
+					if (this.word["content"]["word"]["content"]["phrase"]) {
+						this.phrases = this.word["content"]["word"]["content"]["phrase"];
+					} else {
+						this.phrases = null;
+					}
+					if (this.word["content"]["word"]["content"]["sentence"]) {
+						this.sentence = this.word["content"]["word"]["content"]["sentence"]["sentences"][0];
+					} else {
+						this.sentence = null;
+					}
+					if (this.word["content"]["word"]["content"]["relWord"]) {
+						this.real = this.word["content"]["word"]["content"]["relWord"];
+					} else {
+						this.real = null;
+					}
 					this.loadAudio(this.word["content"]["word"]["wordHead"]);
 
 					if (this.mode == 0) {
