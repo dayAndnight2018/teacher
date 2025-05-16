@@ -230,8 +230,37 @@
 				justify-content: center;
 				width: 100%;
 			}
+
+			.exampleWrapper {
+				margin: 5px auto !important;
+				font-size: 0.8rem !important;
+				align-self: flex-start;
+				width: 100% !important;
+				box-sizing: border-box !important;
+			}
+
+			.phraseWrapper {
+				display: flex !important;
+				flex-direction: column !important;
+				flex-wrap: wrap !important;
+				height: 8rem !important;
+				overflow: scroll !important;
+				justify-content: flex-start !important;
+				align-items: flex-start !important;
+			}
+
+			.card{
+				height: auto !important;
+			}
 		}
 
+		.exampleWrapper {
+			margin: 5px auto !important;
+			font-size: 1.2rem !important;
+			align-self: flex-start;
+			width: 100% !important;
+			box-sizing: border-box !important;
+		}
 
 		button {
 			background: transparent;
@@ -274,7 +303,7 @@
 			display: none;
 		}
 
-		.example{
+		.example {
 			color: white;
 			margin: 5px auto;
 		}
@@ -287,6 +316,29 @@
 			border-radius: 5px;
 			background: white;
 			padding: 0.5rem;
+			height: 100%;
+		}
+
+		.phraseWrapper {
+			display: flex;
+			*/
+			/* flex-flow: column wrap; */
+			/* height: 8rem; */
+			/* overflow: scroll; */
+			/* justify-content: flex-start; */
+			/* align-items: flex-start; */
+			width: 100%;
+			/* height: 100%; */
+			display: grid;
+			grid-auto-flow: column;
+			grid-template-rows: repeat(2, 1fr);
+			justify-content: center;
+			align-items: flex-start;
+			justify-content: flex-start;
+			/* grid-auto-columns: 1px; */
+			grid-column-start: auto;
+			grid-row-gap: 5px;
+			box-sizing: border-box;
 		}
 
 		div::-webkit-scrollbar {
@@ -345,8 +397,7 @@
 					</p>
 				</div>
 
-				<div v-if="sentence && mode === 0"
-					style="margin: 5px auto; font-size: 0.8rem; align-self: flex-start; width: 100%; box-sizing: border-box;">
+				<div v-if="sentence && mode === 0" class="exampleWrapper">
 					<p class="example">例句</p>
 					<div
 						style="color: black; background: #ffd600;padding: 0.5rem; box-sizing: border-box; border-radius: 5px;">
@@ -395,8 +446,7 @@
 				<div v-if="phrases && phrases.phrases && phrases.phrases.length > 0 && mode === 0"
 					style="font-size: 0.8rem;align-self: flex-start;width: 100%;">
 					<p class="example">短语</p>
-					<div
-						style="display: flex;flex-direction: column;flex-wrap: wrap;height: 8rem;overflow: scroll;justify-content: flex-start;align-items: flex-start;">
+					<div class="phraseWrapper">
 						<div v-for="syno in phrases.phrases" class="card" style="background: #ffd600; margin: 2px;">
 							<p>
 								{{syno.pContent}}
