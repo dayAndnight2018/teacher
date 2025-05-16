@@ -149,6 +149,28 @@
 				font-weight: bolder;
 			}
 
+			.mySelect {
+				font-size: 0.8rem !important;
+				position: fixed;
+				left: 20px;
+				top: 20px;
+				border: 1px solid silver;
+				padding: 5px;
+				border-radius: 8px;
+				background: #111827;
+				color: white;
+			}
+
+			button.option {
+				font-size: 0.8rem !important;
+				position: fixed;
+				right: 20px;
+				top: 20px;
+				border: 1px solid silver;
+				padding: 5px;
+				border-radius: 8px;
+			}
+
 			.card {
 				display: inline;
 				flex-direction: row;
@@ -236,7 +258,7 @@
 			border: 1px solid silver;
 			padding: 5px;
 			border-radius: 8px;
-			background: transparent;
+			background: #111827;
 			color: white;
 		}
 
@@ -250,6 +272,11 @@
 
 		.keyboard {
 			display: none;
+		}
+
+		.example{
+			color: white;
+			margin: 5px auto;
 		}
 
 		.card {
@@ -319,10 +346,10 @@
 				</div>
 
 				<div v-if="sentence && mode === 0"
-					style="margin: 5px auto; font-size: 0.8rem;align-self: flex-start; width: 100%; ">
-					<p style="color: white;">例句</p>
+					style="margin: 5px auto; font-size: 0.8rem; align-self: flex-start; width: 100%; box-sizing: border-box;">
+					<p class="example">例句</p>
 					<div
-						style="color: black; background: whitesmoke;padding: 0.5rem; box-sizing: border-box; border-radius: 5px;">
+						style="color: black; background: #ffd600;padding: 0.5rem; box-sizing: border-box; border-radius: 5px;">
 						<p>
 							{{sentence.sContent}}
 						</p>
@@ -334,10 +361,10 @@
 
 				<div v-if="synos && synos.synos && synos.synos.length > 0 && mode === 0"
 					style="font-size: 0.8rem; align-self: flex-start;width: 100%;">
-					<p style="color: white;">近义词</p>
+					<p class="example">近义词</p>
 					<div
 						style="display:flex;flex-direction: row; justify-content: flex-start;overflow-x: scroll; width: 100%;">
-						<div v-for="syno in synos.synos" style="background: whitesmoke;margin: 5px;" class="card">
+						<div v-for="syno in synos.synos" style="background: #ffd600;margin: 5px;" class="card">
 							<!-- <p>
 								[{{syno.pos}}]{{syno.tran}}
 							</p> -->
@@ -350,9 +377,9 @@
 
 				<div v-if="real && real.rels && real.rels.length > 0 && mode === 0"
 					style="font-size: 0.8rem;align-self: flex-start;width: 100%;">
-					<p style="color: white;">同根词</p>
+					<p class="example">同根词</p>
 					<div style="display: flex;flex-direction: row; overflow-x: scroll; width: 100%;">
-						<div v-for="syno in [...real.rels]" style="background: whitesmoke; margin: 2px;" class="card">
+						<div v-for="syno in [...real.rels]" style="background: #ffd600; margin: 2px;" class="card">
 							<div v-for="hwds in [...syno.words]">
 								{{hwds.hwd}}
 								<p>
@@ -365,12 +392,14 @@
 
 
 
-				<div v-if="phrases && phrases.phrases && phrases.phrases.length > 0 && mode === 0" style="font-size: 0.8rem;align-self: flex-start;width: 100%;">
-					<p style="color: white;">短语</p>
-					<div style="display: flex;flex-direction: column;flex-wrap: wrap;height: 8rem;overflow: scroll;justify-content: flex-start;align-items: flex-start;">
-						<div v-for="syno in phrases.phrases" class="card" style="background: whitesmoke; margin: 2px;">
+				<div v-if="phrases && phrases.phrases && phrases.phrases.length > 0 && mode === 0"
+					style="font-size: 0.8rem;align-self: flex-start;width: 100%;">
+					<p class="example">短语</p>
+					<div
+						style="display: flex;flex-direction: column;flex-wrap: wrap;height: 8rem;overflow: scroll;justify-content: flex-start;align-items: flex-start;">
+						<div v-for="syno in phrases.phrases" class="card" style="background: #ffd600; margin: 2px;">
 							<p>
-								{{syno.pContent}} 
+								{{syno.pContent}}
 							</p>
 							<p>
 								{{syno.pCn}}
