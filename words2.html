@@ -55,7 +55,7 @@
 		#letters {
 			display: flex;
 			flex-direction: row;
-			justify-content: center;
+			justify-content: flex-start;
 			align-items: center;
 			width: 100%;
 			flex-wrap: wrap;
@@ -141,7 +141,8 @@
 		@media only screen and (max-width: 600px) {
 			.letter {
 				color: white;
-				font-size: 3rem;
+				font-size: 2.5rem;
+				line-height: 1;
 				margin: 0;
 				min-width: auto;
 				max-width: none;
@@ -151,9 +152,6 @@
 
 			.mySelect {
 				font-size: 0.8rem !important;
-				position: fixed;
-				left: 20px;
-				top: 20px;
 				border: 1px solid silver;
 				padding: 5px;
 				border-radius: 8px;
@@ -163,9 +161,6 @@
 
 			button.option {
 				font-size: 0.8rem !important;
-				position: fixed;
-				right: 20px;
-				top: 20px;
 				border: 1px solid silver;
 				padding: 5px;
 				border-radius: 8px;
@@ -189,6 +184,20 @@
 				margin: 0 2px;
 				min-width: auto;
 				max-width: none;
+			}
+
+			.mySelect {
+				background: #1F2937 !important;
+				border: none !important;
+				padding: 0.5rem !important;
+				border-radius: 1rem !important;
+			}
+
+			.option {
+				background: #1F2937 !important;
+				border: none !important;
+				padding: 0.5rem 1rem !important;
+				border-radius: 1rem !important;
 			}
 
 			.letter_success {
@@ -232,7 +241,6 @@
 			}
 
 			.exampleWrapper {
-				margin: 5px auto !important;
 				font-size: 0.8rem !important;
 				align-self: flex-start;
 				width: 100% !important;
@@ -249,17 +257,20 @@
 				align-items: flex-start !important;
 			}
 
-			.card{
+			.card {
 				height: auto !important;
 			}
 		}
 
 		.exampleWrapper {
-			margin: 5px auto !important;
 			font-size: 1.2rem;
 			align-self: flex-start;
 			width: 100% !important;
 			box-sizing: border-box !important;
+			background: #312E2A;
+			color: white;
+			padding: 0.5rem;
+			border-radius: 0.8rem;
 		}
 
 		button {
@@ -271,9 +282,6 @@
 
 		button.option {
 			font-size: 20px;
-			position: fixed;
-			right: 20px;
-			top: 20px;
 			border: 1px solid silver;
 			padding: 5px;
 			border-radius: 8px;
@@ -281,9 +289,6 @@
 
 		.mySelect {
 			font-size: 20px;
-			position: fixed;
-			left: 20px;
-			top: 20px;
 			border: 1px solid silver;
 			padding: 5px;
 			border-radius: 8px;
@@ -340,58 +345,62 @@
 
 <body>
 	<div id="app" style="overflow: hidden;">
-		<select class="mySelect" @change="select" v-model="nowSelected">
-			<option value="07_01">七年级上册</option>
-			<option value="07_02">七年级下册</option>
-			<option value="08_01">八年级上册</option>
-			<option value="08_02">八年级下册</option>
-			<option value="09">九年级</option>
-			<option value="004_01">专四（一）</option>
-			<option value="004_02">专四（二）</option>
-			<option value="008_01">专八（一）</option>
-			<option value="008_02">专八（二）</option>
-			<option value="006_01">CET6(一)</option>
-			<option value="006_02">CET6(二)</option>
-			<option value="006_03">CET6(三)</option>
-		</select>
+		<div style="position: fixed; width: 100%; top: 0; left: 0; padding:1rem; display: flex; flex-direction: row;    justify-content: space-between;
+    align-items: center;     border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+			<select class="mySelect" @change="select" v-model="nowSelected">
+				<option value="07_01">七年级上册</option>
+				<option value="07_02">七年级下册</option>
+				<option value="08_01">八年级上册</option>
+				<option value="08_02">八年级下册</option>
+				<option value="09">九年级</option>
+				<option value="004_01">专四（一）</option>
+				<option value="004_02">专四（二）</option>
+				<option value="008_01">专八（一）</option>
+				<option value="008_02">专八（二）</option>
+				<option value="006_01">CET6(一)</option>
+				<option value="006_02">CET6(二)</option>
+				<option value="006_03">CET6(三)</option>
+			</select>
 
-		<button v-on:click="toggle()" class="option">
-			记忆
-		</button>
+			<button v-on:click="lastWord()" style="font-size: 1.5rem; display: flex;justify-content: center;align-items: center;">
+				&lt;
+			</button>
+			<button v-on:click="nextWord()" style="font-size: 1.5rem; display: flex;justify-content: center;align-items: center;">
+				&gt;
+			</button>
+
+			<button v-on:click="toggle()" class="option">
+				记忆
+			</button>
+		</div>
 
 		<div id="main">
 
 			<div id="present">
 
-				<div id="letters">
-					<button v-on:click="lastWord()" style="position: absolute;left: 0;">
-						&lt;
-					</button>
+				<div id="letters" style="align-self: flex-start;">
 					<span :class="item.effect" v-for="item in items">
 						<label :class="[item.data===' ' ? 'innerPadding' : '']" v-html="item.data"></label>
 					</span>
-					<button v-on:click="nextWord()" style="position: absolute; right: 0;">
-						&gt;
-					</button>
 				</div>
 
-				<div v-show="phone || trans" style="color:#ffa8a8; font-size: 0.8rem; margin: 5px 0;">
+				<div v-show="phone || trans" style="color:rgba(156, 163, 175,1); font-size: 0.8rem; margin: 5px 0;align-self: flex-start;">
 					<span v-show="phone">[{{phone}}]</span>
 					<span v-for="ele in trans" style="margin: 0 1rem;">
 						<span v-if="ele.pos">[{{ele.pos}}]</span>&nbsp;&nbsp;{{ele.tranCn}};
 					</span>
 				</div>
 
-				<div v-if="memo && mode === 0" style="background: white;font-size: 0.8rem;" class="card">
+				<div v-if="memo && mode === 0" style="font-size: 0.8rem; background: #312E2A; color: rgb(209 213 219);padding: 0.5rem; box-sizing: border-box;border-radius: 0.5rem; width: 100%;margin-top: 1rem;" class="card">
 					<p>
 						{{memo.val}}
 					</p>
 				</div>
 
-				<div v-if="sentence && mode === 0" class="exampleWrapper">
+				<div v-if="sentence && mode === 0" class="exampleWrapper" style="margin-top: 1rem;">
 					<p class="example">例句</p>
 					<div
-						style="color: black; background: #ffd600;padding: 0.5rem; box-sizing: border-box; border-radius: 5px;">
+						style="background: #312E2A; color: rgb(209 213 219);padding: 0.5rem; box-sizing: border-box; border-radius: 5px;">
 						<p>
 							{{sentence.sContent}}
 						</p>
@@ -402,11 +411,11 @@
 				</div>
 
 				<div v-if="synos && synos.synos && synos.synos.length > 0 && mode === 0"
-					style="font-size: 0.8rem; align-self: flex-start;width: 100%;">
+					style="font-size: 0.8rem; align-self: flex-start;width: 100%; background: #1D2233; color: white; border-radius: 0.8rem; padding: 0.5rem; margin-top: 1rem;">
 					<p class="example">近义词</p>
 					<div
 						style="display:flex;flex-direction: row; justify-content: flex-start;overflow-x: scroll; width: 100%;">
-						<div v-for="syno in synos.synos" style="background: #ffd600;margin: 5px;" class="card">
+						<div v-for="syno in synos.synos" style="background: #1D2233; color: rgb(209 213 219);" class="card">
 							<!-- <p>
 								[{{syno.pos}}]{{syno.tran}}
 							</p> -->
@@ -418,10 +427,10 @@
 				</div>
 
 				<div v-if="real && real.rels && real.rels.length > 0 && mode === 0"
-					style="font-size: 0.8rem;align-self: flex-start;width: 100%;">
+					style="font-size: 0.8rem;align-self: flex-start;width: 100%; margin-top: 1rem; background: #1D2233; color: white; border-radius: 0.8rem; padding: 0.5rem; ">
 					<p class="example">同根词</p>
 					<div style="display: flex;flex-direction: row; overflow-x: scroll; width: 100%;">
-						<div v-for="syno in [...real.rels]" style="background: #ffd600; margin: 2px;" class="card">
+						<div v-for="syno in [...real.rels]" style="background: #1D2233; color: rgb(209 213 219);" class="card">
 							<div v-for="hwds in [...syno.words]">
 								{{hwds.hwd}}
 								<p>
@@ -435,10 +444,10 @@
 
 
 				<div v-if="phrases && phrases.phrases && phrases.phrases.length > 0 && mode === 0"
-					style="font-size: 0.8rem;align-self: flex-start;width: 100%;">
+					style="font-size: 0.8rem;align-self: flex-start;width: 100%;margin-top: 1rem;background: #1D2233; color: white; border-radius: 0.8rem; padding: 0.5rem; ">
 					<p class="example">短语</p>
 					<div class="phraseWrapper">
-						<div v-for="syno in phrases.phrases" class="card" style="background: #ffd600; margin: 2px;">
+						<div v-for="syno in phrases.phrases" class="card" style="background: #1D2233; color: rgb(209 213 219);">
 							<p>
 								{{syno.pContent}}
 							</p>
