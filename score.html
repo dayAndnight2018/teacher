@@ -1,0 +1,749 @@
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.js"></script>
+    <script src="https://dayandnight2018.github.io/lib/js/vueResource.js"></script>
+    <title>打分器</title>
+    <style>
+        .aaa {
+            padding: 0.1rem;
+            /* border: 1px solid green;
+              border-top: 2px solid green;
+              border-bottom: 2px solid green; */
+            font-size: 36px;
+            width: 48px;
+            height: 48px;
+            text-align: center;
+
+            margin: 5px;
+            font-family: "楷体";
+            position: relative;
+
+            margin-top: 30px;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            vertical-align: center;
+            font-weight: bold;
+        }
+
+        #app {
+            width: 100%;
+        }
+
+        .bbb {
+            padding: 0.1rem;
+            /* border: 1px solid green;
+              border-top: 2px solid green;
+              border-bottom: 2px solid green; */
+            font-size: 1.8rem;
+            height: 28px;
+            text-align: center;
+
+            margin: 5px 0;
+            font-family: "楷体";
+            position: relative;
+
+            margin-top: 30px;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            vertical-align: center;
+        }
+
+        /* .wrapper>.aaa:first-child{
+           	border-left: 2px solid green !important;
+           }
+
+           .wrapper>.aaa:last-child{
+           	border-right: 2px solid green !important;
+           } */
+
+        .wrapper {
+
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            vertical-align: center;
+        }
+
+        .hr-line {
+            position: absolute;
+            width: 100%;
+            color: black;
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            z-index: -1;
+        }
+
+        .vt-line {
+            position: absolute;
+            width: 100%;
+            color: black;
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            z-index: -1;
+            transform: rotate(90deg);
+        }
+
+        .pinyin {
+            position: absolute;
+            width: 100%;
+            color: red;
+            z-index: -1;
+            bottom: calc(100% + 5px);
+            font-size: 14px;
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .hr-div {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .grid-div {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 42%;
+
+            border-bottom: 1px dashed silver;
+            padding: 0.5rem;
+            margin: 0.5rem;
+        }
+
+        .vc-div {
+            margin: 0 1rem;
+            width: 100%;
+        }
+
+        .match {
+            margin: 0 2rem;
+        }
+
+        .poem-div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 2rem;
+        }
+
+        .po-title {
+            font-size: 2.8rem;
+            font-family: 楷体;
+            margin: 0.5rem;
+        }
+
+        .po-poet {
+            font-size: 1.5rem;
+            font-family: 楷体;
+            margin: 0.5rem;
+        }
+
+        input {
+            border-radius: 5px;
+            font-size: 1rem;
+            padding: 5px;
+        }
+
+        button {
+            padding: 0.2rem;
+            font-size: 0.8rem !important;
+            margin: 0.2rem;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .scoreItem {
+            font-size: 1.2rem;
+            padding: 0.25rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background: silver;
+        }
+
+        .scoreItemActive {
+            font-size: 1.2rem;
+            padding: 0.25rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 255, 0.1);
+        }
+
+        .scoreItemActive:active {
+            transform: scale(0.85);
+        }
+
+        .organic-circle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .organic-circle::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: 3px solid #ff67676b;
+            border-radius: 66% 34% 51% 49% / 54% 45% 55% 46%;
+        }
+
+        .scoreItemWrapper {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            margin: 1rem auto 4rem auto;
+            box-sizing: border-box;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            place-items: center;
+            grid-row-gap: 5px;
+        }
+
+        .topWrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 0.5rem;
+            box-sizing: border-box;
+        }
+
+        .topInnerWrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            height: min-content;
+            align-items: center;
+        }
+
+        .select {
+            font-size: 1.2rem;
+            border: none;
+            appearance: none;
+        }
+
+        .tail {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            background: white;
+        }
+
+        .resetBtn {
+            background: pink;
+            color: black;
+            font-size: 2rem;
+            border: thin solid rgba(0, 0, 0, 0.1);
+            width: 50%;
+            padding: 0.5rem;
+            border-radius: 10px;
+        }
+
+        .helpBtn {
+            background: silver;
+            color: black;
+            font-size: 1rem;
+            border: thin solid rgba(0, 0, 0, 0.1);
+            padding: 0.5rem;
+            border-radius: 10px;
+        }
+
+        .resetBtn:active {
+            transform: scale(0.8);
+        }
+
+        .submitBtn {
+            background: dodgerblue;
+            color: white;
+            font-size: 2rem;
+            border: thin solid rgba(0, 0, 0, 0.1);
+            width: 50%;
+            padding: 0.5rem;
+            border-radius: 10px;
+        }
+
+        .submitBtn:active {
+            transform: scale(0.8);
+        }
+
+        .input {
+            border: none;
+        }
+
+        .primaryScoreType {
+            background: silver;
+            color: black;
+            border: none;
+            padding: 0.5rem;
+            width: 50%;
+        }
+
+        .activeScoreType {
+            background: dodgerblue;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            width: 50%;
+        }
+
+        .inputCard {
+            z-index: 999;
+            background-color: white;
+            position: fixed;
+            width: 90%;
+            left: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 10px;
+            box-sizing: border-box;
+            box-shadow: 2px 2px 5px silver;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .inputCard div {
+            margin: 0.5rem 0;
+        }
+
+        .panelOuterWrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            box-sizing: border-box;
+            box-shadow: 2px 2px 5px silver;
+            padding: 1rem;
+            border-radius: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            z-index: 1000;
+        }
+
+        .panelWrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+            position: relative;
+            height: 100%;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        .closeBtn {
+            background: pink;
+            color: black;
+            font-size: 2rem;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+        Vue.component('pinyin', {
+            props: ['text', 'pin', 'yi', 'point'],
+            data() {
+                return {
+                    pinyins: { ...this.pin },
+                }
+            },
+            template: `
+              <div class="wrapper" >
+               <div class="aaa" :class="[point ? 'red' : '']" v-for="(ele, idx) in text" @click="$emit('word', idx)">
+                            <span class="pinyin">{{pinyins[idx]}}</span>
+                            {{ele}}
+                    </div>
+                <div class="aaa">：</div>
+                <div class="bbb">{{yi}}</div>
+              </div>
+              `,
+            watch: {
+                pin: {
+                    handler(newer, older) {
+                        // let res = []
+                        // for (let i = 0; i < this.text.length; i++){
+                        // 	res.push(this.pin[idx])
+                        // }
+                        // this.
+                        this.pinyins = newer;
+                    },
+                    deep: true,
+                    immediate: true
+                }
+            },
+            methods: {
+                updatePinyin(newer) {
+                    console.log("here", newer)
+                    this.pinyins = newer;
+                    this.$forceUpdate();
+                }
+            }
+        });
+
+
+    </script>
+    <div id="app">
+        <div style="position: sticky; top: 0; width: 100%; background: white; box-shadow: 2px 2px 5px silver;">
+            <div class="topWrapper">
+                <select class="select" v-model="currentClass" @change="classChange">
+                    <option :value="ele.val" v-for="ele in classes">{{ele.title}}</option>
+                </select>
+                <img src="https://s21.ax1x.com/2025/05/28/pVptO5q.png" alt="pVptO5q.png"
+                    style="width: 1.5rem;height: 1.5rem;" />
+                <select class="select" v-model="currentClassMate" @change="classmateChange">
+                    <option :value="ele" v-for="ele in classmates[currentClass]">{{ele}}</option>
+                </select>
+                <div>总分：<span @click="showInputCard">{{totalScore}}</span></div>
+
+                <!-- <button @click="modifyTotalScore">修改</button> -->
+                <div>
+                    得分：
+                    <input type="number" class="input" v-model="actualScore" style="width: 2rem;color: red;" disabled />
+                </div>
+            </div>
+            <div class="topWrapper">
+                <button :class="[scoreType === 1 ? 'activeScoreType' : 'primaryScoreType']" @click="scoreTypeClick(1)">+
+                    加分</button>
+                <button :class="[scoreType === -1 ? 'activeScoreType' : 'primaryScoreType']"
+                    @click="scoreTypeClick(-1)">- 减分</button>
+            </div>
+        </div>
+        <div class="scoreItemWrapper">
+            <button
+                :class="[(scoreType === 1 && actualScore + ele <= totalScore) || (scoreType === -1 && actualScore + ele >= 0)? 'scoreItemActive' : 'scoreItem']"
+                v-for="ele in scores" @click="calculate(ele)"
+                :disable="scoreType === 1 ? actualScore + ele > totalScore : actualScore + ele < 0">{{ele}}</button>
+        </div>
+        <div class="panelOuterWrapper" v-if="showRecord">
+            <div class="panelWrapper">
+                <div class="closeBtn" @click="hideRecordPanel">×</div>
+                <div style="align-self: flex-start; width: 100%; box-sizing: border-box; padding: 1rem; color: black;">
+                    赋分记录</div>
+                <div style="height: 100%; width: 100%; overflow-y: scroll;">
+                    <div v-for="score in scoreRecord" style="margin: 0.5rem 0;">
+                        <span v-if="score > 0">+</span>{{score}}分
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="tail">
+            <!-- <button @click="showRecordPanel" class="helpBtn">赋分记录</button> -->
+            <button @click="exportAs" class="helpBtn">导出</button>
+            <button @click="reset" class="resetBtn">重置</button>
+            <button @click="submit" class="submitBtn">提交</button>
+        </div>
+        <div>
+            <table style="border: 0px solid #0094ff;" v-for="(ele, key) in groupedScoreList" ref="table_k" :data-k="key">
+                <tr style="border: 0px solid #0094ff;">
+                    <td style="border: 0px solid #0094ff;text-align: left">姓名</td>
+                    <td style="border: 0px solid #0094ff;text-align: left">成绩</td>
+                </tr>
+                <tr style="border: 0px solid #0094ff;" v-for="inner in ele">
+                    <td style="border: 0px solid #0094ff;text-align: left">{{inner.classmate}}</td>
+                    <td style="border: 0px solid #0094ff;text-align: right">{{inner.score}}</td>
+                </tr>
+            </table>
+        </div>
+        <!-- <div>
+            <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                正文：
+                <div v-for="(ele, idx) in sens">
+                    <input type="text" v-model="ele.text">
+                    <input type="text" v-model="ele.yi">
+                    <input type="checkbox" v-model="ele.point"/>
+                    <button @click="remove(idx)">移除</button><button @click="insertBefore(idx)">上面插入</button><button
+                        @click="insertAfter(idx)">下面插入</button>
+                </div>
+            </div>
+            <div>
+                注音：
+                <pinyin :text="current" :pin="currentPinyin" v-if="current"></pinyin>
+                <div>
+                    <button v-for="ele in sheng" @click="append(ele)">
+                        {{ele}}
+                    </button>
+                </div>
+                    <template v-for="ele in yun">
+                        <div>
+                            <button v-for="inner in ele" @click="append(inner)">
+                                {{inner}}
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="inputCard" v-if="showCard">
+            <div>请输入总分(0-100)：</div>
+            <div><input v-model="inputModel" type="number"></div>
+            <button @click="confirmTotalScore" class="submitBtn">确认</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var vue = new Vue({
+            el: '#app',
+            data: {
+                currentClass: "13",
+                currentClassMate: "",
+                currentClassMateIndex: 0,
+                totalScore: 100,
+                actualScore: 0,
+                scoreType: 1,
+                scores: [],
+                scoreRecord: [],
+                inputModel: 100,
+                showCard: false,
+                showRecord: false,
+                scoreList:[
+                    
+                ],
+                groupedScoreList:[
+
+                ],
+                classes:[{
+                    title: "十三班",
+                    val: "13"
+                },{
+                    title: "十四班",
+                    val: "14"
+                }],
+                classmates:{
+                    "13":[
+                        "张三",
+                        "李四"
+                    ],
+                    "14":[
+                        "王五",
+                        "赵六"
+                    ]
+                }
+            },
+            mounted() {
+                this.modifyTotalScore();
+                this.currentClassMate = this.classmates[this.currentClass][0];
+            },
+            computed: {
+
+            },
+            methods: {
+                exportAs(){
+                    const groupedBy = {};
+                    for (const item of this.scoreList) {
+                        if (groupedBy[item.className]) {
+                            groupedBy[item.className].push(item);
+                        } else {
+                            groupedBy[item.className] = [item];
+                        }
+                    }
+                    this.groupedScoreList = groupedBy;
+
+                    this.$nextTick(() => {  
+                    
+                        for (let i = 0 ; i < this.$refs["table_k"].length; i++){
+                            console.log(this.$refs["table_k"][i]);
+                            let worksheet = this.$refs["table_k"][i].dataset["k"];
+                            var html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'>";
+                            html += `<head><meta charset='UTF-8'><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>${worksheet}班</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>`;
+                            html += "<body>";
+                            html += this.$refs["table_k"][i].outerHTML;
+                            html += "</body>";
+                            html += "</html>";
+                            console.log(html)
+                            const blob = new Blob([html], {type : 'application/vnd.ms-excel'});
+                            const url1=URL.createObjectURL(blob)
+                            const a = document.createElement('a');
+                            a.href = url1;
+                            a.download = `${worksheet}班.xls`;
+                            a.click();
+                            URL.revokeObjectURL(url1);
+                        }
+                        // let worksheet = this.$refs["table_k"][0];
+                        
+                    });
+                    
+                },
+                classmateChange(){
+                    this.currentClassMateIndex = this.classmates[this.currentClass].indexOf(this.currentClassMate);
+                },
+                classChange(){
+                    this.currentClassMate = this.classmates[this.currentClass][0];
+                },
+                hideRecordPanel() {
+                    this.showRecord = false;
+                },
+                showRecordPanel() {
+                    this.showRecord = true;
+                },
+                showInputCard() {
+                    this.showCard = true;
+                },
+                confirmTotalScore() {
+                    if (this.inputModel >= 0 && this.inputModel <= 100) {
+                        this.totalScore = this.inputModel;
+                        if (this.scoreType === 1) {
+                            this.actualScore = 0;
+                        } else {
+                            this.actualScore = this.totalScore;
+                        }
+                        this.modifyTotalScore();
+                        this.showCard = false;
+                    } else {
+                        alert("分值需要0-100")
+                    }
+                },
+                scoreTypeClick(val) {
+                    this.scoreType = val;
+                    if (this.scoreType === 1) {
+                        this.actualScore = 0;
+                    } else {
+                        this.actualScore = this.totalScore;
+                    }
+                    this.modifyTotalScore();
+                },
+                reset() {
+                    if (this.scoreType === 1) {
+                        this.actualScore = 0;
+                    } else {
+                        this.actualScore = this.totalScore;
+                    }
+                    this.modifyTotalScore();
+                },
+                submit() {
+                    this.scoreList.push({
+                        className: this.currentClass,
+                        classmate: this.currentClassMate,
+                        score: this.actualScore
+                    });
+                    if (this.scoreType === 1) {
+                        this.actualScore = 0;
+                    } else {
+                        this.actualScore = this.totalScore;
+                    }
+                    if (this.currentClassMateIndex < this.classmates[this.currentClass].length - 1){
+                        this.currentClassMateIndex+=1;
+                        this.currentClassMate = this.classmates[this.currentClass][this.currentClassMateIndex];
+                    }
+                    this.modifyTotalScore();
+                },
+                calculate(e) {
+                    if (this.actualScore + e >= 0 && this.actualScore + e <= this.totalScore) {
+                        this.actualScore += e;
+                        this.scoreRecord.push(e)
+                    }
+                },
+                scoreTypeChange(param) {
+                    this.modifyTotalScore();
+                },
+                totalScoreChanged(param) {
+                    console.log(param)
+                },
+                modifyTotalScore(param) {
+                    let array = []
+                    for (let i = 0.5; i <= this.totalScore; i += 0.5) {
+                        array.push(i * this.scoreType);
+                    }
+                    this.scores = array;
+                },
+                remove(idx) {
+                    this.sens.splice(idx, 1);
+                },
+                insertBefore(idx) {
+                    this.sens.splice(idx, 0, {
+                        "text": '',
+                        "pinyin": {},
+                        "yi": "",
+                        "point": false
+                    });
+                },
+                insertAfter(idx) {
+                    this.sens.splice(idx + 1, 0, {
+                        "text": '',
+                        "pinyin": {},
+                        "yi": "",
+                        "point": false
+                    });
+                },
+                handleMe() {
+                    // console.log("ele")
+                    this.current = ele;
+                },
+                hi(ele, idx) {
+                    this.currentRow = idx;
+                    this.currentCols = ele;
+                    this.currentPinyin = {
+                        "0": ''
+                    };
+                    this.current = this.sens[idx]["text"][ele]
+                },
+                append(ele) {
+                    this.currentPinyin["0"] = this.currentPinyin["0"] + ele;
+                    let old = this.sens[this.currentRow];
+                    old["pinyin"][this.currentCols] = this.currentPinyin["0"];
+
+                    this.$set(this.sens, this.currentRow, old);
+                    console.log(this.sens)
+                    this.$refs[`son_${this.currentRow}`][0].updatePinyin(old["pinyin"])
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
