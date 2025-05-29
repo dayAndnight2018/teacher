@@ -180,7 +180,8 @@
 			.letter_underlined {
 				border-bottom: 2px solid white;
 				color: white;
-				font-size: 1.5rem;
+				line-height: 1;
+				font-size: 2.5rem;
 				margin: 0 2px;
 				min-width: auto;
 				max-width: none;
@@ -202,8 +203,21 @@
 
 			.letter_success {
 				color: lightgreen;
-				font-size: 1.5rem;
+				font-size: 2.5rem;
 				margin: 0;
+				line-height: 1;
+				min-width: auto;
+				max-width: none;
+				font-family: 'Times New Roman';
+				font-weight: bolder;
+			}
+
+			
+			.letter_fail {
+				color: red;
+				font-size: 2.5rem;
+				margin: 0;
+				line-height: 1;
 				min-width: auto;
 				max-width: none;
 				font-family: 'Times New Roman';
@@ -431,7 +445,7 @@
 					<p class="example">同根词</p>
 					<div style="display: flex;flex-direction: row; overflow-x: scroll; width: 100%;">
 						<div v-for="syno in [...real.rels]" style="background: #1D2233; color: rgb(209 213 219);" class="card">
-							<div v-for="hwds in [...syno.words]">
+							<div v-for="hwds in [...syno.words]" style="margin: 0.5rem;">
 								{{hwds.hwd}}
 								<p>
 									<span style="margin: 0 5px;">[{{syno.pos}}]</span>{{hwds.tran}}
