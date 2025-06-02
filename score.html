@@ -1,9 +1,12 @@
+<!DOCTYPE html>
+<html lang="cn">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.js"></script>
     <script src="https://dayandnight2018.github.io/lib/js/vueResource.js"></script>
-    <title>打分器</title>
+    <title>CSS网格线,田字格</title>
     <style>
         .aaa {
             padding: 0.1rem;
@@ -56,11 +59,11 @@
         }
 
         /* .wrapper>.aaa:first-child{
-           	border-left: 2px solid green !important;
+            border-left: 2px solid green !important;
            }
 
            .wrapper>.aaa:last-child{
-           	border-right: 2px solid green !important;
+            border-right: 2px solid green !important;
            } */
 
         .wrapper {
@@ -395,14 +398,14 @@
 
 <body>
     <script type="text/javascript">
-        Vue.component('pinyin', {
-            props: ['text', 'pin', 'yi', 'point'],
-            data() {
-                return {
-                    pinyins: { ...this.pin },
-                }
-            },
-            template: `
+    Vue.component('pinyin', {
+        props: ['text', 'pin', 'yi', 'point'],
+        data() {
+            return {
+                pinyins: { ...this.pin },
+            }
+        },
+        template: `
               <div class="wrapper" >
                <div class="aaa" :class="[point ? 'red' : '']" v-for="(ele, idx) in text" @click="$emit('word', idx)">
                             <span class="pinyin">{{pinyins[idx]}}</span>
@@ -412,30 +415,28 @@
                 <div class="bbb">{{yi}}</div>
               </div>
               `,
-            watch: {
-                pin: {
-                    handler(newer, older) {
-                        // let res = []
-                        // for (let i = 0; i < this.text.length; i++){
-                        // 	res.push(this.pin[idx])
-                        // }
-                        // this.
-                        this.pinyins = newer;
-                    },
-                    deep: true,
-                    immediate: true
-                }
-            },
-            methods: {
-                updatePinyin(newer) {
-                    console.log("here", newer)
+        watch: {
+            pin: {
+                handler(newer, older) {
+                    // let res = []
+                    // for (let i = 0; i < this.text.length; i++){
+                    //  res.push(this.pin[idx])
+                    // }
+                    // this.
                     this.pinyins = newer;
-                    this.$forceUpdate();
-                }
+                },
+                deep: true,
+                immediate: true
             }
-        });
-
-
+        },
+        methods: {
+            updatePinyin(newer) {
+                console.log("here", newer)
+                this.pinyins = newer;
+                this.$forceUpdate();
+            }
+        }
+    });
     </script>
     <div id="app">
         <div style="position: sticky; top: 0; width: 100%; background: white; box-shadow: 2px 2px 5px silver;">
@@ -443,13 +444,11 @@
                 <select class="select" v-model="currentClass" @change="classChange">
                     <option :value="ele.val" v-for="ele in classes">{{ele.title}}</option>
                 </select>
-                <img src="https://s21.ax1x.com/2025/05/28/pVptO5q.png" alt="pVptO5q.png"
-                    style="width: 1.5rem;height: 1.5rem;" />
+                <img src="https://s21.ax1x.com/2025/05/28/pVptO5q.png" alt="pVptO5q.png" style="width: 1.5rem;height: 1.5rem;" />
                 <select class="select" v-model="currentClassMate" @change="classmateChange">
                     <option :value="ele" v-for="ele in classmates[currentClass]">{{ele}}</option>
                 </select>
                 <div>总分：<span @click="showInputCard">{{totalScore}}</span></div>
-
                 <!-- <button @click="modifyTotalScore">修改</button> -->
                 <div>
                     得分：
@@ -459,15 +458,11 @@
             <div class="topWrapper">
                 <button :class="[scoreType === 1 ? 'activeScoreType' : 'primaryScoreType']" @click="scoreTypeClick(1)">+
                     加分</button>
-                <button :class="[scoreType === -1 ? 'activeScoreType' : 'primaryScoreType']"
-                    @click="scoreTypeClick(-1)">- 减分</button>
+                <button :class="[scoreType === -1 ? 'activeScoreType' : 'primaryScoreType']" @click="scoreTypeClick(-1)">- 减分</button>
             </div>
         </div>
         <div class="scoreItemWrapper">
-            <button
-                :class="[(scoreType === 1 && actualScore + ele <= totalScore) || (scoreType === -1 && actualScore + ele >= 0)? 'scoreItemActive' : 'scoreItem']"
-                v-for="ele in scores" @click="calculate(ele)"
-                :disable="scoreType === 1 ? actualScore + ele > totalScore : actualScore + ele < 0">{{ele}}</button>
+            <button :class="[((scoreType === 1 && actualScore + ele <= totalScore) || (scoreType === -1 && actualScore + ele >= 0))? 'scoreItemActive' : 'scoreItem']" v-for="ele in scores" @click="calculate(ele)" :disable="scoreType === 1 ? actualScore + ele > totalScore : actualScore + ele < 0">{{ele}}</button>
         </div>
         <div class="panelOuterWrapper" v-if="showRecord">
             <div class="panelWrapper">
@@ -480,7 +475,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="tail">
             <!-- <button @click="showRecordPanel" class="helpBtn">赋分记录</button> -->
@@ -489,7 +483,7 @@
             <button @click="submit" class="submitBtn">提交</button>
         </div>
         <div>
-            <table style="border: 0px solid #0094ff;" v-for="(ele, key) in groupedScoreList" ref="table_k" :data-k="key">
+            <table style="border: 0px solid #0094ff;" v-for="(ele, key) in groupedScoreList" ref="table_k" :data-k="key" v-show="false">
                 <tr style="border: 0px solid #0094ff;">
                     <td style="border: 0px solid #0094ff;text-align: left">姓名</td>
                     <td style="border: 0px solid #0094ff;text-align: left">成绩</td>
@@ -529,7 +523,6 @@
                 </div>
             </div>
         </div> -->
-
         <div class="inputCard" v-if="showCard">
             <div>请输入总分(0-100)：</div>
             <div><input v-model="inputModel" type="number"></div>
@@ -537,212 +530,296 @@
         </div>
     </div>
     <script type="text/javascript">
-        var vue = new Vue({
-            el: '#app',
-            data: {
-                currentClass: "13",
-                currentClassMate: "",
-                currentClassMateIndex: 0,
-                totalScore: 100,
-                actualScore: 0,
-                scoreType: 1,
-                scores: [],
-                scoreRecord: [],
-                inputModel: 100,
-                showCard: false,
-                showRecord: false,
-                scoreList:[
-                    
-                ],
-                groupedScoreList:[
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            currentClass: "13",
+            currentClassMate: "",
+            currentClassMateIndex: 0,
+            totalScore: 100,
+            actualScore: 0,
+            scoreType: 1,
+            scores: [],
+            scoreRecord: [],
+            inputModel: 100,
+            showCard: false,
+            showRecord: false,
+            scoreList: [
 
+            ],
+            groupedScoreList: [
+
+            ],
+            classes: [{
+                title: "十三班",
+                val: "13"
+            }, {
+                title: "十四班",
+                val: "14"
+            }],
+            classmates: {
+                "13": ["邵子庭",
+                    "张博文",
+                    "邵奕铄",
+                    "毛星凯",
+                    "孙艺蔓",
+                    "陈祥凯",
+                    "徐艺琳",
+                    "宋咏澄",
+                    "汲昊展",
+                    "林子雯",
+                    "石天成",
+                    "邢思琪",
+                    "李彦诺",
+                    "张家豪",
+                    "杨子骞",
+                    "彭梓峻",
+                    "郑子淇",
+                    "王声涵",
+                    "李欣诺",
+                    "胡天娇",
+                    "王景冬",
+                    "李朝铭",
+                    "王梦浩",
+                    "张根深",
+                    "朱乐琪",
+                    "李思瑶",
+                    "朱乐瑶",
+                    "孟柯馨",
+                    "高嘉祺",
+                    "徐艺菲",
+                    "诸葛继阳",
+                    "刘梓骐",
+                    "陈那鑫",
+                    "纪景文",
+                    "王宇辰",
+                    "张韬",
+                    "裴杰恺",
+                    "崔誉露",
+                    "李雨",
+                    "陈怡安",
+                    "孙悦程",
+                    "万礼",
+                    "王梓桐",
+                    "刘书彤",
+                    "赵帅彤阳",
+                    "符岫玉",
+                    "吴俊毅",
+                    "王美地"
                 ],
-                classes:[{
-                    title: "十三班",
-                    val: "13"
-                },{
-                    title: "十四班",
-                    val: "14"
-                }],
-                classmates:{
-                    "13":[
-                        "张三",
-                        "李四"
-                    ],
-                    "14":[
-                        "王五",
-                        "赵六"
-                    ]
+                "14": ["王秋桐",
+                    "徐歆妍",
+                    "徐竟程",
+                    "时贺琛",
+                    "杨峻祺",
+                    "王一闻",
+                    "张益暄",
+                    "禚孝逸",
+                    "杨恩赫",
+                    "王啸煊",
+                    "孙康杰",
+                    "高妍",
+                    "刘家瑞",
+                    "王思远",
+                    "何昊泽",
+                    "文曦平",
+                    "李婧语",
+                    "冯芮可",
+                    "赵子锐",
+                    "许硕",
+                    "徐梓涵",
+                    "刘畅",
+                    "郭秋晨",
+                    "许馨予",
+                    "张译萱",
+                    "李一诺",
+                    "曲勇铭",
+                    "张家贺",
+                    "李荣轩",
+                    "陈俊名",
+                    "肖俊宇",
+                    "葛文凯",
+                    "于晋章",
+                    "杨淑淼",
+                    "丁义馨",
+                    "王钾越",
+                    "李明泽",
+                    "王悦雯",
+                    "林立扬",
+                    "薄夫林",
+                    "刘潇月",
+                    "姜宣宇"
+                ]
+            }
+        },
+        mounted() {
+            this.modifyTotalScore();
+            this.currentClassMate = this.classmates[this.currentClass][0];
+        },
+        computed: {
+
+        },
+        methods: {
+            exportAs() {
+                const groupedBy = {};
+                for (const item of this.scoreList) {
+                    if (groupedBy[item.className]) {
+                        groupedBy[item.className].push(item);
+                    } else {
+                        groupedBy[item.className] = [item];
+                    }
                 }
+                this.groupedScoreList = groupedBy;
+
+                this.$nextTick(() => {
+
+                    for (let i = 0; i < this.$refs["table_k"].length; i++) {
+                        console.log(this.$refs["table_k"][i]);
+                        let worksheet = this.$refs["table_k"][i].dataset["k"];
+                        var html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'>";
+                        html += `<head><meta charset='UTF-8'><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>${worksheet}班</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>`;
+                        html += "<body>";
+                        html += this.$refs["table_k"][i].outerHTML;
+                        html += "</body>";
+                        html += "</html>";
+                        console.log(html)
+                        const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+                        const url1 = URL.createObjectURL(blob)
+                        const a = document.createElement('a');
+                        a.href = url1;
+                        a.download = `${worksheet}班.xls`;
+                        a.click();
+                        URL.revokeObjectURL(url1);
+                    }
+                    // let worksheet = this.$refs["table_k"][0];
+
+                });
+
             },
-            mounted() {
-                this.modifyTotalScore();
+            classmateChange() {
+                this.currentClassMateIndex = this.classmates[this.currentClass].indexOf(this.currentClassMate);
+            },
+            classChange() {
                 this.currentClassMate = this.classmates[this.currentClass][0];
             },
-            computed: {
-
+            hideRecordPanel() {
+                this.showRecord = false;
             },
-            methods: {
-                exportAs(){
-                    const groupedBy = {};
-                    for (const item of this.scoreList) {
-                        if (groupedBy[item.className]) {
-                            groupedBy[item.className].push(item);
-                        } else {
-                            groupedBy[item.className] = [item];
-                        }
-                    }
-                    this.groupedScoreList = groupedBy;
-
-                    this.$nextTick(() => {  
-                    
-                        for (let i = 0 ; i < this.$refs["table_k"].length; i++){
-                            console.log(this.$refs["table_k"][i]);
-                            let worksheet = this.$refs["table_k"][i].dataset["k"];
-                            var html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'>";
-                            html += `<head><meta charset='UTF-8'><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>${worksheet}班</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>`;
-                            html += "<body>";
-                            html += this.$refs["table_k"][i].outerHTML;
-                            html += "</body>";
-                            html += "</html>";
-                            console.log(html)
-                            const blob = new Blob([html], {type : 'application/vnd.ms-excel'});
-                            const url1=URL.createObjectURL(blob)
-                            const a = document.createElement('a');
-                            a.href = url1;
-                            a.download = `${worksheet}班.xls`;
-                            a.click();
-                            URL.revokeObjectURL(url1);
-                        }
-                        // let worksheet = this.$refs["table_k"][0];
-                        
-                    });
-                    
-                },
-                classmateChange(){
-                    this.currentClassMateIndex = this.classmates[this.currentClass].indexOf(this.currentClassMate);
-                },
-                classChange(){
-                    this.currentClassMate = this.classmates[this.currentClass][0];
-                },
-                hideRecordPanel() {
-                    this.showRecord = false;
-                },
-                showRecordPanel() {
-                    this.showRecord = true;
-                },
-                showInputCard() {
-                    this.showCard = true;
-                },
-                confirmTotalScore() {
-                    if (this.inputModel >= 0 && this.inputModel <= 100) {
-                        this.totalScore = this.inputModel;
-                        if (this.scoreType === 1) {
-                            this.actualScore = 0;
-                        } else {
-                            this.actualScore = this.totalScore;
-                        }
-                        this.modifyTotalScore();
-                        this.showCard = false;
-                    } else {
-                        alert("分值需要0-100")
-                    }
-                },
-                scoreTypeClick(val) {
-                    this.scoreType = val;
+            showRecordPanel() {
+                this.showRecord = true;
+            },
+            showInputCard() {
+                this.showCard = true;
+            },
+            confirmTotalScore() {
+                if (this.inputModel >= 0 && this.inputModel <= 100) {
+                    this.totalScore = this.inputModel;
                     if (this.scoreType === 1) {
                         this.actualScore = 0;
                     } else {
                         this.actualScore = this.totalScore;
                     }
                     this.modifyTotalScore();
-                },
-                reset() {
-                    if (this.scoreType === 1) {
-                        this.actualScore = 0;
-                    } else {
-                        this.actualScore = this.totalScore;
-                    }
-                    this.modifyTotalScore();
-                },
-                submit() {
-                    this.scoreList.push({
-                        className: this.currentClass,
-                        classmate: this.currentClassMate,
-                        score: this.actualScore
-                    });
-                    if (this.scoreType === 1) {
-                        this.actualScore = 0;
-                    } else {
-                        this.actualScore = this.totalScore;
-                    }
-                    if (this.currentClassMateIndex < this.classmates[this.currentClass].length - 1){
-                        this.currentClassMateIndex+=1;
-                        this.currentClassMate = this.classmates[this.currentClass][this.currentClassMateIndex];
-                    }
-                    this.modifyTotalScore();
-                },
-                calculate(e) {
-                    if (this.actualScore + e >= 0 && this.actualScore + e <= this.totalScore) {
-                        this.actualScore += e;
-                        this.scoreRecord.push(e)
-                    }
-                },
-                scoreTypeChange(param) {
-                    this.modifyTotalScore();
-                },
-                totalScoreChanged(param) {
-                    console.log(param)
-                },
-                modifyTotalScore(param) {
-                    let array = []
-                    for (let i = 0.5; i <= this.totalScore; i += 0.5) {
-                        array.push(i * this.scoreType);
-                    }
-                    this.scores = array;
-                },
-                remove(idx) {
-                    this.sens.splice(idx, 1);
-                },
-                insertBefore(idx) {
-                    this.sens.splice(idx, 0, {
-                        "text": '',
-                        "pinyin": {},
-                        "yi": "",
-                        "point": false
-                    });
-                },
-                insertAfter(idx) {
-                    this.sens.splice(idx + 1, 0, {
-                        "text": '',
-                        "pinyin": {},
-                        "yi": "",
-                        "point": false
-                    });
-                },
-                handleMe() {
-                    // console.log("ele")
-                    this.current = ele;
-                },
-                hi(ele, idx) {
-                    this.currentRow = idx;
-                    this.currentCols = ele;
-                    this.currentPinyin = {
-                        "0": ''
-                    };
-                    this.current = this.sens[idx]["text"][ele]
-                },
-                append(ele) {
-                    this.currentPinyin["0"] = this.currentPinyin["0"] + ele;
-                    let old = this.sens[this.currentRow];
-                    old["pinyin"][this.currentCols] = this.currentPinyin["0"];
-
-                    this.$set(this.sens, this.currentRow, old);
-                    console.log(this.sens)
-                    this.$refs[`son_${this.currentRow}`][0].updatePinyin(old["pinyin"])
+                    this.showCard = false;
+                } else {
+                    alert("分值需要0-100")
                 }
+            },
+            scoreTypeClick(val) {
+                this.scoreType = val;
+                if (this.scoreType === 1) {
+                    this.actualScore = 0;
+                } else {
+                    this.actualScore = this.totalScore;
+                }
+                this.modifyTotalScore();
+            },
+            reset() {
+                if (this.scoreType === 1) {
+                    this.actualScore = 0;
+                } else {
+                    this.actualScore = this.totalScore;
+                }
+                this.modifyTotalScore();
+            },
+            submit() {
+                this.scoreList.push({
+                    className: this.currentClass,
+                    classmate: this.currentClassMate,
+                    score: this.actualScore
+                });
+                if (this.scoreType === 1) {
+                    this.actualScore = 0;
+                } else {
+                    this.actualScore = this.totalScore;
+                }
+                if (this.currentClassMateIndex < this.classmates[this.currentClass].length - 1) {
+                    this.currentClassMateIndex += 1;
+                    this.currentClassMate = this.classmates[this.currentClass][this.currentClassMateIndex];
+                }
+                this.modifyTotalScore();
+            },
+            calculate(e) {
+                if (this.actualScore + e >= 0 && this.actualScore + e <= this.totalScore) {
+                    this.actualScore += e;
+                    this.scoreRecord.push(e)
+                }
+            },
+            scoreTypeChange(param) {
+                this.modifyTotalScore();
+            },
+            totalScoreChanged(param) {
+                console.log(param)
+            },
+            modifyTotalScore(param) {
+                let array = []
+                for (let i = 0.5; i <= this.totalScore; i += 0.5) {
+                    array.push(i * this.scoreType);
+                }
+                this.scores = array;
+            },
+            remove(idx) {
+                this.sens.splice(idx, 1);
+            },
+            insertBefore(idx) {
+                this.sens.splice(idx, 0, {
+                    "text": '',
+                    "pinyin": {},
+                    "yi": "",
+                    "point": false
+                });
+            },
+            insertAfter(idx) {
+                this.sens.splice(idx + 1, 0, {
+                    "text": '',
+                    "pinyin": {},
+                    "yi": "",
+                    "point": false
+                });
+            },
+            handleMe() {
+                // console.log("ele")
+                this.current = ele;
+            },
+            hi(ele, idx) {
+                this.currentRow = idx;
+                this.currentCols = ele;
+                this.currentPinyin = {
+                    "0": ''
+                };
+                this.current = this.sens[idx]["text"][ele]
+            },
+            append(ele) {
+                this.currentPinyin["0"] = this.currentPinyin["0"] + ele;
+                let old = this.sens[this.currentRow];
+                old["pinyin"][this.currentCols] = this.currentPinyin["0"];
+
+                this.$set(this.sens, this.currentRow, old);
+                console.log(this.sens)
+                this.$refs[`son_${this.currentRow}`][0].updatePinyin(old["pinyin"])
             }
-        })
+        }
+    })
     </script>
 </body>
 
