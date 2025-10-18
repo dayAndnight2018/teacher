@@ -3,265 +3,230 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.js"></script>
-    <script src="https://dayandnight2018.github.io/lib/js/vueResource.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="format-detection" content="telephone=no" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.3/dist/vue-resource.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
     <title>CSS网格线,田字格</title>
     <style>
+        /* 全局样式重置和基础设置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        /* 汉字样式 */
         .aaa {
             padding: 0.1rem;
-            /* border: 1px solid green;
-              border-top: 2px solid green;
-              border-bottom: 2px solid green; */
-            font-size: 36px;
-            width: 48px;
-            height: 48px;
+            font-size: 2.25rem;
+            width: 3rem;
+            height: 3rem;
             text-align: center;
-
             margin: 5px;
             font-family: "楷体";
             position: relative;
-
             margin-top: 30px;
-
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            vertical-align: center;
             font-weight: bold;
         }
 
+        /* 应用主容器 */
         #app {
             width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
+        /* 拼音样式 */
         .bbb {
             padding: 0.1rem;
-            /* border: 1px solid green;
-              border-top: 2px solid green;
-              border-bottom: 2px solid green; */
             font-size: 1.8rem;
             height: 28px;
             text-align: center;
-
             margin: 5px 0;
             font-family: "楷体";
             position: relative;
-
             margin-top: 30px;
-
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            vertical-align: center;
         }
 
-        /* .wrapper>.aaa:first-child{
-            border-left: 2px solid green !important;
-           }
-
-           .wrapper>.aaa:last-child{
-            border-right: 2px solid green !important;
-           } */
-
         .wrapper {
-
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
             align-items: center;
-            vertical-align: center;
-        }
-
-        .hr-line {
-            position: absolute;
-            width: 100%;
-            color: black;
-            border: 2px dashed rgba(0, 0, 0, 0.1);
-            z-index: -1;
-        }
-
-        .vt-line {
-            position: absolute;
-            width: 100%;
-            color: black;
-            border: 2px dashed rgba(0, 0, 0, 0.1);
-            z-index: -1;
-            transform: rotate(90deg);
         }
 
         .pinyin {
             position: absolute;
             width: 100%;
-            color: red;
+            color: #e74c3c;
             z-index: -1;
             bottom: calc(100% + 5px);
             font-size: 14px;
         }
 
-        #app {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .hr-div {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        .grid-div {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-            flex-wrap: wrap;
-            width: 42%;
-
-            border-bottom: 1px dashed silver;
-            padding: 0.5rem;
-            margin: 0.5rem;
-        }
-
-        .vc-div {
-            margin: 0 1rem;
-            width: 100%;
-        }
-
-        .match {
-            margin: 0 2rem;
-        }
-
-        .poem-div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            margin: 2rem;
-        }
-
-        .po-title {
-            font-size: 2.8rem;
-            font-family: 楷体;
-            margin: 0.5rem;
-        }
-
-        .po-poet {
-            font-size: 1.5rem;
-            font-family: 楷体;
-            margin: 0.5rem;
-        }
-
+        /* 输入框样式 */
         input {
-            border-radius: 5px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
             font-size: 1rem;
-            padding: 5px;
+            padding: 8px 12px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
+        }
+        
+        input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
 
+        /* 通用按钮样式 */
         button {
-            padding: 0.2rem;
-            font-size: 0.8rem !important;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
             margin: 0.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            outline: none;
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .red {
-            color: red;
+            color: #e74c3c;
         }
 
+        /* 分数按钮样式 */
         .scoreItem {
-            font-size: 1.2rem;
-            padding: 0.25rem;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            width: 3rem;
-            height: 3rem;
+            font-size: 1.25rem;
+            padding: 1rem;
+            border: 2px solid #e1e8ed;
+            width: 4rem;
+            height: 4rem;
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            background: silver;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .scoreItem:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .scoreItemActive {
-            font-size: 1.2rem;
-            padding: 0.25rem;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            width: 3rem;
-            height: 3rem;
+            font-size: 1.25rem;
+            padding: 1rem;
+            border: 2px solid #3498db;
+            width: 4rem;
+            height: 4rem;
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            background: rgba(0, 0, 255, 0.1);
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 12px;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
-
+        
+        .scoreItemActive:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 16px rgba(52, 152, 219, 0.3);
+        }
+        
         .scoreItemActive:active {
-            transform: scale(0.85);
+            transform: scale(0.95);
         }
 
-        .organic-circle {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .organic-circle::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            border: 3px solid #ff67676b;
-            border-radius: 66% 34% 51% 49% / 54% 45% 55% 46%;
-        }
-
+        /* 分数按钮容器 */
         .scoreItemWrapper {
             width: 100%;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            margin: 1rem auto 4rem auto;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            margin: 2rem auto;
+            padding: 1rem 1rem 8rem 1rem; /* 添加底部padding防止被底部按钮遮挡 */
             box-sizing: border-box;
             justify-content: center;
             align-items: center;
-            align-content: center;
-            place-items: center;
-            grid-row-gap: 5px;
+            gap: 12px;
+            max-width: 600px;
         }
 
+        /* 顶部工具栏 */
         .topWrapper {
             width: 100%;
             display: flex;
             flex-direction: row;
-            justify-content: space-around;
-            padding: 0.5rem;
-            box-sizing: border-box;
-        }
-
-        .topInnerWrapper {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            height: min-content;
+            justify-content: space-between;
             align-items: center;
+            padding: 1rem;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
+        /* 下拉选择框样式 */
         .select {
-            font-size: 1.2rem;
-            border: none;
+            font-size: 1.1rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 8px 12px;
+            background-color: white;
             appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.9%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 16px;
+            min-width: 120px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        
+        .select:hover, .select:focus {
+            border-color: #3498db;
+            outline: none;
         }
 
+        /* 底部固定按钮区域 */
         .tail {
             position: fixed;
             bottom: 0;
@@ -270,87 +235,164 @@
             display: flex;
             flex-direction: row;
             background: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem;
+            z-index: 100;
         }
 
+        /* 功能按钮样式 */
         .resetBtn {
-            background: pink;
-            color: black;
-            font-size: 2rem;
-            border: thin solid rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            font-size: 1.2rem;
+            border: none;
             width: 50%;
-            padding: 0.5rem;
-            border-radius: 10px;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .resetBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
         }
 
-        .helpBtn {
-            background: silver;
-            color: black;
+        .helpBtn, .exportBtn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             font-size: 1rem;
-            border: thin solid rgba(0, 0, 0, 0.1);
-            padding: 0.5rem;
+            border: none;
+            padding: 0.75rem 1.5rem;
             border-radius: 10px;
+            margin: 0 0.5rem;
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .helpBtn:hover, .exportBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
-        .resetBtn:active {
-            transform: scale(0.8);
+        .scanBtn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            margin: 0.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(79, 172, 254, 0.3);
+        }
+        
+        .scanBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(79, 172, 254, 0.4);
+        }
+
+        .statsBtn {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            margin: 0.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(250, 112, 154, 0.3);
+        }
+        
+        .statsBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(250, 112, 154, 0.4);
         }
 
         .submitBtn {
-            background: dodgerblue;
-            color: white;
-            font-size: 2rem;
-            border: thin solid rgba(0, 0, 0, 0.1);
-            width: 50%;
-            padding: 0.5rem;
-            border-radius: 10px;
-        }
-
-        .submitBtn:active {
-            transform: scale(0.8);
-        }
-
-        .input {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            font-size: 1.2rem;
             border: none;
+            width: 50%;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .submitBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(168, 237, 234, 0.3);
         }
 
+        /* 分数类型切换按钮 */
         .primaryScoreType {
-            background: silver;
-            color: black;
+            background: #f0f2f5;
+            color: #65676b;
             border: none;
-            padding: 0.5rem;
+            padding: 0.75rem;
             width: 50%;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
-
+        
         .activeScoreType {
-            background: dodgerblue;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 0.5rem;
+            padding: 0.75rem;
             width: 50%;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
+        /* 弹窗样式 */
         .inputCard {
             z-index: 999;
             background-color: white;
             position: fixed;
             width: 90%;
-            left: 5%;
+            max-width: 500px;
+            left: 50%;
             top: 50%;
-            transform: translateY(-50%);
-            border-radius: 10px;
-            box-sizing: border-box;
-            box-shadow: 2px 2px 5px silver;
-            padding: 1rem;
+            transform: translate(-50%, -50%);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
+            animation: slideIn 0.3s ease;
         }
-
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
         .inputCard div {
-            margin: 0.5rem 0;
+            margin: 0.75rem 0;
+            width: 100%;
+        }
+        
+        .inputCard input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
         }
 
+        /* 面板样式 */
         .panelOuterWrapper {
             display: flex;
             flex-direction: column;
@@ -358,14 +400,24 @@
             height: 100%;
             align-items: center;
             box-sizing: border-box;
-            box-shadow: 2px 2px 5px silver;
-            padding: 1rem;
-            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            border-radius: 16px;
             position: fixed;
             top: 0;
             left: 0;
             background: white;
             z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .panelWrapper {
@@ -377,21 +429,462 @@
             height: 100%;
             box-sizing: border-box;
             margin: 0 auto;
+            max-width: 800px;
         }
 
         .closeBtn {
-            background: pink;
-            color: black;
-            font-size: 2rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            font-size: 1.5rem;
             position: absolute;
             right: 0;
             top: 0;
-            width: 2rem;
-            height: 2rem;
+            width: 3rem;
+            height: 3rem;
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .closeBtn:hover {
+            transform: scale(1.1);
+        }
+
+        /* 扫码器样式 */
+        .scanner-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .scanner-video {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.3);
+        }
+
+        .scanner-overlay {
+            position: absolute;
+            width: 80%;
+            max-width: 300px;
+            height: 300px;
+            border: 2px solid #4CAF50;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 12px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(76, 175, 80, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+            }
+        }
+
+        .scanner-controls {
+            position: absolute;
+            bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            border-radius: 16px;
+        }
+
+        .scanner-message {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* 统计面板样式 */
+        .stats-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            animation: slideInRight 0.3s ease;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .stats-header {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid #e1e8ed;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .stats-summary {
+            padding: 2rem;
+            text-align: center;
+            font-size: 1.2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stats-summary-item {
+            display: inline-block;
+            margin: 0 1rem;
+            font-weight: 600;
+        }
+
+        .stats-list {
+            padding: 1rem;
+        }
+
+        .stats-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stats-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .submitted {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .not-submitted {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        /* 顶部粘性导航 */
+        .topSticky {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 0;
+            z-index: 50;
+            border-radius: 0 0 16px 16px;
+        }
+        
+        /* 总分显示 */
+        .totalScoreDisplay {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #34495e;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: #ecf0f1;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .totalScoreDisplay:hover {
+            background: #bdc3c7;
+            transform: translateY(-2px);
+        }
+        
+        /* 实际得分显示 */
+        .actualScoreDisplay {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e74c3c;
+            min-width: 3rem;
+            text-align: center;
+        }
+        
+        /* 动画效果类 */
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 0.3s ease;
+        }
+        
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
+        
+        .scale-enter-active, .scale-leave-active {
+            transition: transform 0.3s ease;
+        }
+        
+        .scale-enter, .scale-leave-to {
+            transform: scale(0.8);
+        }
+        
+        /* 移动端触摸优化 */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        button, .scoreItem, .scoreItemActive {
+            -webkit-appearance: none;
+            appearance: none;
+            touch-action: manipulation;
+        }
+        
+        /* 紧凑化顶部布局样式 */
+        .topWrapper.compact {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5rem;
+            gap: 0.5rem;
+        }
+        
+        .select-group {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+        
+        .compact-select {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.6rem;
+            min-width: 80px;
+            border-radius: 6px;
+        }
+        
+        .score-display {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .score-info {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .score-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .total-score {
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            padding: 0.2rem 0.5rem;
+            background: #f0f0f0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+        
+        .compact-input {
+            width: 3rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.2rem 0.4rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .compact-btn {
+            font-size: 0.9rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            flex: 1;
+        }
+        
+        .score-type-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .compact-score-type {
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            flex: 1;
+            text-align: center;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .topWrapper {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            
+            .select {
+                width: 100%;
+                font-size: 1rem;
+                padding: 10px 12px;
+            }
+            
+            .scoreItemWrapper {
+                grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+                gap: 6px;
+                padding: 1rem 0.75rem 8rem 0.75rem;
+            }
+            
+            .scoreItem, .scoreItemActive {
+                width: 3.5rem;
+                height: 3.5rem;
+                font-size: 1.2rem;
+                border-radius: 12px;
+            }
+            
+            .scanBtn, .statsBtn {
+                width: 100%;
+                margin: 0.5rem 0;
+                padding: 1rem;
+                font-size: 1.1rem;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            .nameLabel {
+                font-size: 1.1rem;
+            }
+            
+            .currentName {
+                font-size: 1.3rem;
+            }
+            
+            .inputCard {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .inputCard {
+                width: 98%;
+                padding: 1.25rem;
+                margin: 0.5rem;
+            }
+            
+            .tail {
+                padding: 0.25rem;
+                gap: 0.5rem;
+            }
+            
+            .resetBtn, .submitBtn {
+                font-size: 1rem;
+                padding: 0.9rem;
+                border-radius: 10px;
+            }
+            
+            .scoreItem, .scoreItemActive {
+                width: 3rem;
+                height: 3rem;
+                font-size: 1.1rem;
+            }
+            
+            .scoreItemWrapper {
+                grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+                gap: 5px;
+            }
+            
+            .panelWrapper {
+                padding: 1rem;
+            }
+            
+            .scanner-container {
+                width: 90%;
+                height: 250px;
+            }
+            
+            .stats-header {
+                font-size: 1.3rem;
+            }
+            
+            .stats-summary {
+                font-size: 1rem;
+            }
+        }
+        
+        /* 小屏幕手机优化 */
+        @media (max-width: 375px) {
+            .scoreItem, .scoreItemActive {
+                width: 2.75rem;
+                height: 2.75rem;
+                font-size: 1rem;
+            }
+            
+            .scoreItemWrapper {
+                padding: 0.75rem 0.5rem 7rem 0.5rem;
+            }
+            
+            .tail {
+                padding: 0.2rem;
+            }
+            
+            .resetBtn, .submitBtn {
+                font-size: 0.9rem;
+                padding: 0.8rem;
+            }
+        }
+        
+        /* 横屏模式优化 */
+        @media screen and (orientation: landscape) and (max-width: 812px) {
+            .scoreItemWrapper {
+                grid-template-columns: repeat(auto-fit, minmax(55px, 1fr));
+                padding: 0.5rem 1rem 6rem 1rem;
+            }
+            
+            .inputCard {
+                width: 90%;
+                margin: 0.5rem auto;
+            }
         }
     </style>
 </head>
@@ -439,26 +932,60 @@
     });
     </script>
     <div id="app">
-        <div style="position: sticky; top: 0; width: 100%; background: white; box-shadow: 2px 2px 5px silver;">
-            <div class="topWrapper">
-                <select class="select" v-model="currentClass" @change="classChange">
-                    <option :value="ele.val" v-for="ele in classes">{{ele.title}}</option>
-                </select>
-                <img src="https://s21.ax1x.com/2025/05/28/pVptO5q.png" alt="pVptO5q.png" style="width: 1.5rem;height: 1.5rem;" />
-                <select class="select" v-model="currentClassMate" @change="classmateChange">
-                    <option :value="ele" v-for="ele in classmates[currentClass]">{{ele}}</option>
-                </select>
-                <div>总分：<span @click="showInputCard">{{totalScore}}</span></div>
-                <!-- <button @click="modifyTotalScore">修改</button> -->
-                <div>
-                    得分：
-                    <input type="number" class="input" v-model="actualScore" style="width: 2rem;color: red;" disabled />
+        <div style="position: sticky; top: 0; width: 100%; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 50;">
+        <script>
+            // 添加编辑模式和获取班级标题的方法到Vue实例中
+            Vue.mixin({
+                data() {
+                    return {
+                        editMode: false
+                    }
+                },
+                methods: {
+                    getClassTitle(val) {
+                        const cls = this.classes.find(c => c.val === val);
+                        return cls ? cls.title : '';
+                    }
+                }
+            });
+        </script>
+            <div class="topWrapper compact">
+                <div class="select-group">
+                    <div class="class-name-display" v-if="!editMode" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 500;">
+                        <span>{{getClassTitle(currentClass)}} - {{currentClassMate}}</span>
+                        <button @click="editMode = true" style="font-size: 0.8rem; padding: 0.2rem 0.4rem; background: #e0e0e0; border-radius: 4px;">编辑</button>
+                    </div>
+                    <div v-else style="display: flex; align-items: center; gap: 0.3rem;">
+                        <select class="select compact-select" v-model="currentClass" @change="classChange">
+                            <option :value="ele.val" v-for="ele in classes">{{ele.title}}</option>
+                        </select>
+                        <img src="https://s21.ax1x.com/2025/05/28/pVptO5q.png" alt="pVptO5q.png" style="width: 1.2rem;height: 1.2rem; margin: 0 0.3rem;" />
+                        <select class="select compact-select" v-model="currentClassMate" @change="classmateChange">
+                            <option :value="ele" v-for="ele in classmates[currentClass]">{{ele}}</option>
+                        </select>
+                        <button @click="editMode = false" style="font-size: 0.8rem; padding: 0.2rem 0.4rem; background: #4CAF50; color: white; border-radius: 4px;">确定</button>
+                    </div>
                 </div>
-            </div>
-            <div class="topWrapper">
-                <button :class="[scoreType === 1 ? 'activeScoreType' : 'primaryScoreType']" @click="scoreTypeClick(1)">+
-                    加分</button>
-                <button :class="[scoreType === -1 ? 'activeScoreType' : 'primaryScoreType']" @click="scoreTypeClick(-1)">- 减分</button>
+                
+                <div class="score-controls-row" style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.4rem;">
+                    <div class="score-info" style="display: flex; align-items: center; gap: 0.2rem;">
+                        <span class="score-label" style="font-size: 0.85rem;">总分：</span>
+                        <span @click="showInputCard" class="total-score" style="font-size: 0.9rem; padding: 0.2rem 0.4rem;">{{totalScore}}</span>
+                    </div>
+                    <div class="score-info" style="display: flex; align-items: center; gap: 0.2rem;">
+                        <span class="score-label" style="font-size: 0.85rem;">得分：</span>
+                        <input type="number" class="input compact-input" v-model="actualScore" style="color: red; font-size: 0.9rem; width: 2.8rem; padding: 0.2rem 0.3rem;" disabled />
+                    </div>
+                    <div class="score-type-buttons" style="display: flex; gap: 0.3rem; flex: 1; max-width: 150px;">
+                        <button :class="[scoreType === 1 ? 'activeScoreType' : 'primaryScoreType', 'compact-score-type']" @click="scoreTypeClick(1)" style="font-size: 0.8rem; padding: 0.3rem 0.5rem; height: 28px;">+加分</button>
+                        <button :class="[scoreType === -1 ? 'activeScoreType' : 'primaryScoreType', 'compact-score-type']" @click="scoreTypeClick(-1)" style="font-size: 0.8rem; padding: 0.3rem 0.5rem; height: 28px;">-减分</button>
+                    </div>
+                </div>
+                
+                <div class="action-buttons-row" style="display: flex; gap: 0.5rem; width: 100%;">
+                    <button @click="startScan" class="compact-btn scanBtn" style="flex: 1; font-size: 0.9rem; padding: 0.5rem;">扫码</button>
+                    <button @click="showStats" class="compact-btn statsBtn" style="flex: 1; font-size: 0.9rem; padding: 0.5rem;">统计</button>
+                </div>
             </div>
         </div>
         <div class="scoreItemWrapper">
@@ -476,11 +1003,43 @@
                 </div>
             </div>
         </div>
-        <div class="tail">
+        <div class="tail" style="padding: 0.4rem;">
             <!-- <button @click="showRecordPanel" class="helpBtn">赋分记录</button> -->
-            <button @click="exportAs" class="helpBtn">导出</button>
-            <button @click="reset" class="resetBtn">重置</button>
-            <button @click="submit" class="submitBtn">提交</button>
+            <button @click="exportAs" class="helpBtn" style="padding: 0.6rem 0.8rem; font-size: 0.9rem;">导出</button>
+            <button @click="reset" class="resetBtn" style="padding: 0.6rem; font-size: 1rem; height: auto;">重置</button>
+            <button @click="submit" class="submitBtn" style="padding: 0.6rem; font-size: 1rem; height: auto;">提交</button>
+        </div>
+        
+        <!-- 扫描器组件 -->
+        <div class="scanner-container" v-if="isScanning">
+            <button class="closeBtn" @click="stopScan">×</button>
+            <video ref="scannerVideo" class="scanner-video" autoplay muted playsinline></video>
+            <div class="scanner-overlay"></div>
+            <div class="scanner-controls">
+                <div class="scanner-message">{{scanMessage}}</div>
+                <button class="scanBtn" @click="stopScan">停止扫描</button>
+            </div>
+        </div>
+        
+        <!-- 统计面板 -->
+        <div class="stats-container" v-if="showStatsPanel">
+            <button class="closeBtn" @click="hideStatsPanel">×</button>
+            <div class="stats-header">
+                <h2>{{currentClass}}班 作业统计</h2>
+            </div>
+            <div class="stats-summary">
+                <div>应交人数：{{totalStudents}}</div>
+                <div>实交人数：{{submittedCount}}</div>
+                <div>未交人数：{{notSubmittedCount}}</div>
+            </div>
+            <div class="stats-list">
+                <div class="stats-item" v-for="student in classmates[currentClass]">
+                    <span>{{student}}</span>
+                    <span :class="isStudentSubmitted(student) ? 'submitted' : 'not-submitted'">
+                        {{isStudentSubmitted(student) ? '✓ 已交' : '✗ 未交'}}
+                    </span>
+                </div>
+            </div>
         </div>
         <div>
             <table style="border: 0px solid #0094ff;" v-for="(ele, key) in groupedScoreList" ref="table_k" :data-k="key" v-show="false">
@@ -550,6 +1109,9 @@
             groupedScoreList: [
 
             ],
+            isScanning: false,
+            scanMessage: '请将二维码对准扫描框',
+            showStatsPanel: false,
             classes: [{
                 title: "十三班",
                 val: "13"
@@ -657,7 +1219,20 @@
             this.currentClassMate = this.classmates[this.currentClass][0];
         },
         computed: {
-
+            // 计算属性 - 总人数
+            totalStudents() {
+                return this.classmates[this.currentClass].length;
+            },
+            
+            // 计算属性 - 已交人数
+            submittedCount() {
+                return this.scoreList.filter(item => item.className === this.currentClass).length;
+            },
+            
+            // 计算属性 - 未交人数
+            notSubmittedCount() {
+                return this.totalStudents - this.submittedCount;
+            }
         },
         methods: {
             exportAs() {
@@ -680,8 +1255,8 @@
                         html += `<head><meta charset='UTF-8'><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>${worksheet}班</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>`;
                         html += "<body>";
                         html += this.$refs["table_k"][i].outerHTML;
-                        html += "</body>";
-                        html += "</html>";
+                        html +="</body>";
+                        html +="</html>";
                         console.log(html)
                         const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
                         const url1 = URL.createObjectURL(blob)
@@ -817,7 +1392,333 @@
                 this.$set(this.sens, this.currentRow, old);
                 console.log(this.sens)
                 this.$refs[`son_${this.currentRow}`][0].updatePinyin(old["pinyin"])
-            }
+            },
+            
+            // 开始扫描二维码
+            startScan() {
+                this.isScanning = true;
+                this.scanMessage = '请将二维码对准扫描框';
+                
+                // 首先检查是否在HTTPS环境
+                if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                    this.scanMessage = '摄像头需要HTTPS环境\n请使用HTTPS访问或本地开发环境';
+                    setTimeout(() => this.stopScan(), 3000);
+                    return;
+                }
+                
+                const video = this.$refs.scannerVideo;
+                
+                // 检查是否支持媒体设备API
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    this.scanMessage = '浏览器不支持摄像头访问功能';
+                    setTimeout(() => this.stopScan(), 2000);
+                    return;
+                }
+                
+                // 重置视频元素
+                if (video.srcObject) {
+                    video.srcObject.getTracks().forEach(track => track.stop());
+                    video.srcObject = null;
+                }
+                
+                // 检测是否为移动设备
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                // 为移动设备优化的媒体约束
+                const mobileConstraints = {
+                    video: {
+                        facingMode: { exact: 'environment' },
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 },
+                        frameRate: { ideal: 15 },
+                        // 针对iOS设备的优化
+                        facingMode: 'environment'
+                    }
+                };
+                
+                // 为桌面设备优化的媒体约束
+                const desktopConstraints = {
+                    video: {
+                        facingMode: { exact: 'environment' },
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    }
+                };
+                
+                // 尝试不同的摄像头配置，优先使用移动优化配置
+                const constraintsList = isMobile ? [
+                    mobileConstraints,  // 移动优化配置
+                    { video: { facingMode: 'environment' } }, // 备用后置
+                    { video: true } // 默认配置
+                ] : [
+                    desktopConstraints,  // 桌面优化配置
+                    { video: { facingMode: 'environment' } }, // 备用后置
+                    { video: { facingMode: 'user' } }, // 前置摄像头
+                    { video: true } // 默认配置
+                ];
+                
+                // 为移动设备调整视频元素样式以更好地适应屏幕
+                if (isMobile) {
+                    video.style.objectFit = 'cover';
+                    video.style.width = '100%';
+                    video.style.height = '100%';
+                }
+                
+                this.tryGetUserMediaWithFallback(video, constraintsList, 0);
+            },
+            
+            // 递归尝试不同的摄像头配置
+            tryGetUserMediaWithFallback(video, constraintsList, index) {
+                if (index >= constraintsList.length) {
+                    // 所有尝试都失败
+                    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                    let errorMessage = '无法访问摄像头，请检查权限和设备状态';
+                    
+                    // 针对移动设备提供更具体的错误提示
+                    if (isMobile) {
+                        errorMessage = '无法访问摄像头\n请确保已授予权限并检查设备设置';
+                    }
+                    
+                    this.scanMessage = errorMessage;
+                    setTimeout(() => this.stopScan(), 3000);
+                    return;
+                }
+                
+                const currentConstraints = constraintsList[index];
+                
+                // 修复iOS Safari的兼容性问题 - 移除exact关键字以提高兼容性
+                const safeConstraints = JSON.parse(JSON.stringify(currentConstraints));
+                if (safeConstraints.video && safeConstraints.video.facingMode && typeof safeConstraints.video.facingMode === 'object') {
+                    delete safeConstraints.video.facingMode.exact;
+                }
+                
+                navigator.mediaDevices.getUserMedia(safeConstraints)
+                    .then(stream => {
+                        // 调整移动设备的视频轨道设置
+                        const videoTracks = stream.getVideoTracks();
+                        if (videoTracks.length > 0 && /Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                            // 获取并应用视频轨道的约束能力
+                            const capabilities = videoTracks[0].getCapabilities();
+                            try {
+                                // 尝试设置最佳帧率以节省移动设备电量
+                                if (capabilities.frameRate && capabilities.frameRate.max >= 15) {
+                                    videoTracks[0].applyConstraints({ frameRate: 15 });
+                                }
+                            } catch (e) {
+                                console.log('无法应用视频轨道约束:', e);
+                            }
+                        }
+                        
+                        video.srcObject = stream;
+                        this.startQRScan(video);
+                    })
+                    .catch(err => {
+                        console.error(`摄像头配置尝试 ${index + 1} 失败:`, err);
+                        
+                        // 显示正在切换配置的消息
+                        this.scanMessage = `尝试其他摄像头配置... (${index + 2}/${constraintsList.length})`;
+                        
+                        // 延迟后尝试下一个配置
+                        setTimeout(() => {
+                            this.tryGetUserMediaWithFallback(video, constraintsList, index + 1);
+                        }, 300);
+                    });
+            },
+            
+            // 停止扫描
+            stopScan() {
+                const video = this.$refs.scannerVideo;
+                if (video.srcObject) {
+                    video.srcObject.getTracks().forEach(track => track.stop());
+                    video.srcObject = null;
+                }
+                
+                // 恢复视频元素的默认样式
+                if (video) {
+                    video.style.transform = '';
+                    video.style.objectFit = '';
+                    video.style.width = '';
+                    video.style.height = '';
+                }
+                
+                this.isScanning = false;
+            },
+            
+            // 扫描二维码逻辑
+            startQRScan(video) {
+                const canvasElement = document.createElement('canvas');
+                const canvas = canvasElement.getContext('2d');
+                
+                // 检测是否为移动设备
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                // 为移动设备优化扫描参数
+                const scanOptions = {
+                    inversionAttempts: isMobile ? "attemptBoth" : "dontInvert",
+                    // 移动设备使用更高的容错率
+                    shouldTryHarder: isMobile
+                };
+                
+                // 修复this上下文问题，使用箭头函数
+                const tick = () => {
+                    if (!this.isScanning || !video.srcObject) return; // 防止停止扫描后仍在处理
+                    
+                    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                        // 确保canvas尺寸与视频一致
+                        try {
+                            // 移动设备可能需要调整尺寸以获得更好的性能
+                            const targetHeight = isMobile ? Math.min(video.videoHeight || 720, 720) : (video.videoHeight || 720);
+                            const targetWidth = isMobile ? Math.min(video.videoWidth || 1280, 1280) : (video.videoWidth || 1280);
+                            
+                            canvasElement.height = targetHeight;
+                            canvasElement.width = targetWidth;
+                            
+                            // 为移动设备优化绘制过程
+                            if (isMobile) {
+                                // 使用较慢但更准确的绘制模式
+                                canvas.imageSmoothingEnabled = true;
+                                canvas.imageSmoothingQuality = 'medium';
+                            }
+                            
+                            canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+                            const imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+                            const code = jsQR(imageData.data, imageData.width, imageData.height, scanOptions);
+                            
+                            if (code) {
+                                this.processQRCode(code.data);
+                                return;
+                            }
+                        } catch (e) {
+                            console.error('扫描处理过程出错:', e);
+                        }
+                    }
+                    
+                    // 为移动设备降低扫描频率以节省电量
+                    if (this.isScanning) {
+                        if (isMobile) {
+                            // 移动设备使用setTimeout代替requestAnimationFrame以降低频率
+                            setTimeout(tick, 100); // 约10fps，平衡性能和电池
+                        } else {
+                            requestAnimationFrame(tick);
+                        }
+                    }
+                };
+                
+                // 添加视频加载监听
+                video.onloadedmetadata = () => {
+                    // 调整移动设备的视频元素显示
+                    if (isMobile) {
+                        // 确保视频方向正确
+                        if (video.videoWidth > video.videoHeight) {
+                            // 横向视频
+                            video.style.transform = 'rotate(90deg)';
+                            video.style.transformOrigin = 'center';
+                        }
+                    }
+                    this.scanMessage = '摄像头准备就绪，请扫描二维码';
+                };
+                
+                video.onerror = (err) => {
+                    console.error('视频元素错误:', err);
+                    
+                    // 针对移动设备的特定错误处理
+                    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+                    const isAndroid = /Android/i.test(navigator.userAgent);
+                    
+                    if (isIOS) {
+                        this.scanMessage = 'iOS设备视频初始化失败\n请检查系统隐私设置';
+                    } else if (isAndroid) {
+                        this.scanMessage = 'Android设备视频初始化失败\n请允许应用访问摄像头';
+                    } else {
+                        this.scanMessage = '视频初始化失败';
+                    }
+                    
+                    setTimeout(() => this.stopScan(), 2000);
+                };
+                
+                // 开始扫描循环
+                tick();
+            },
+            
+            // 处理二维码数据
+            processQRCode(data) {
+                // 支持多种格式的二维码数据：
+                // 1. 直接是学生姓名
+                // 2. JSON格式: {"name":"学生姓名", "class":"班级"}
+                // 3. 键值对格式: name=学生姓名
+                
+                let studentName = data.trim();
+                let className = this.currentClass;
+                
+                try {
+                    // 尝试解析JSON格式
+                    const parsedData = JSON.parse(studentName);
+                    if (parsedData.name) {
+                        studentName = parsedData.name.trim();
+                        if (parsedData.class) {
+                            className = parsedData.class;
+                        }
+                    }
+                } catch (e) {
+                    // 尝试解析键值对格式
+                    if (studentName.includes('=')) {
+                        const pairs = studentName.split('&');
+                        pairs.forEach(pair => {
+                            const [key, value] = pair.split('=');
+                            if (key.toLowerCase() === 'name' && value) {
+                                studentName = decodeURIComponent(value.trim());
+                            } else if (key.toLowerCase() === 'class' && value) {
+                                className = decodeURIComponent(value.trim());
+                            }
+                        });
+                    }
+                }
+                
+                // 如果班级信息有变化，切换班级
+                if (className !== this.currentClass && this.classes.some(c => c.val === className)) {
+                    this.currentClass = className;
+                    this.classChange(); // 调用班级切换方法
+                }
+                
+                // 检查学生是否存在于当前班级
+                const currentClassStudents = this.classmates[this.currentClass];
+                if (currentClassStudents.includes(studentName)) {
+                    this.currentClassMate = studentName;
+                    this.classmateChange();
+                    this.scanMessage = `成功识别: ${this.currentClass}班 ${studentName}`;
+                    
+                    // 扫描成功后自动停止扫描并更新界面
+                    setTimeout(() => {
+                        this.stopScan();
+                        // 添加视觉反馈，滚动到分数按钮区域
+                        document.querySelector('.scoreItemWrapper').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 1000);
+                } else {
+                    this.scanMessage = `未在${this.currentClass}班找到学生: ${studentName}`;
+                    setTimeout(() => {
+                        this.scanMessage = '请将二维码对准扫描框';
+                    }, 2000);
+                }
+            },
+            
+            // 显示统计面板
+            showStats() {
+                this.showStatsPanel = true;
+            },
+            
+            // 隐藏统计面板
+            hideStatsPanel() {
+                this.showStatsPanel = false;
+            },
+            
+            // 判断学生是否已提交
+            isStudentSubmitted(student) {
+                return this.scoreList.some(item => 
+                    item.className === this.currentClass && item.classmate === student
+                );
+            },
+            
+
         }
     })
     </script>
